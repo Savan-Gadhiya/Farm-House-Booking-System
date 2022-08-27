@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const { boolean } = require("joi");
 
 const authSchema = new mongoose.Schema(
   {
@@ -9,9 +10,13 @@ const authSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
-    password: {
+    hasedPassword: {
       type: String,
       required: true,
+    },
+    isAdded: {
+      type: String,
+      default: "false",
     },
     salt: {
       type: String,
@@ -29,7 +34,7 @@ authSchema
     //gererate salt
     this.salt = this.makeSalt();
     //encryptPassword
-    this.password = this.encryptPassword(password);
+    this.hasedPassword = this.encryptPassword(password);
   })
   .get(function () {
     return this._password;
@@ -37,7 +42,7 @@ authSchema
 
 authSchema.methods = {
   authenticate: function (plainText) {
-    return this.encryptPassword(plainText) === this.password;
+    return this.encryptPassword(plainText) === this.hasedPassword;
   },
 
   encryptPassword: function (password) {
