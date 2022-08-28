@@ -3,7 +3,7 @@ const {
   loginValidation,
 } = require("../validators/validation");
 const jwt = require("jsonwebtoken");
-const User = require("../model/User");
+const User = require("../model/userSchema");
 
 // @route    POST api/register
 // @desc     Login User
@@ -34,6 +34,7 @@ exports.register = async (req, res) => {
     res.status(400).send(err);
   }
 };
+
 
 // @route    POST api/login
 // @desc     Login User

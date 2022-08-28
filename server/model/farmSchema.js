@@ -4,7 +4,7 @@ const farmSchema = new mongoose.Schema(
   {
     ownerId: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
