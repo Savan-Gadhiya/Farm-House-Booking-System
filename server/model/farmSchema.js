@@ -31,7 +31,10 @@ const farmSchema = new mongoose.Schema(
         type: String,
       },
       location: {
-        type: "Point",
+        type: {
+          type: String,
+          default: "Point"
+        },
         coordinates: [], //first is longitude and second is latitude
       },
     },

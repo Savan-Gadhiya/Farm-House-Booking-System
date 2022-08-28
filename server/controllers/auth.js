@@ -3,7 +3,13 @@ const {
   loginValidation,
 } = require("../validators/validation");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
 const User = require("../model/userSchema");
+=======
+
+const userSchema = require("../model/userSchema");
+const authSchema = require("../model/authSchema");
+>>>>>>> e5461e0220903aa07c58a8c55f142ee4ceb0e307
 
 // @route    POST api/register
 // @desc     Login User
@@ -13,23 +19,25 @@ exports.register = async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   // check is user exist
-  const emailExist = await User.findOne({ email: email });
+  const emailExist = await authSchema.findOne({ email: email });
   if (emailExist) return res.status(400).send("Email already exists.");
 
   // Create a new user
-  const user = new User({
-    name,
+  const auth = new authSchema({
     email,
     password,
   });
 
   try {
-    const savedUser = await user.save();
+    const savedUser = await auth.save();
+
     // res.send(savedUser);
-    return res.status(200).json({ message: "Signup success! Please Login..." });
+    return res
+      .status(200)
+      .json({ message: "Signup success! Please Login...", savedUser });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -47,7 +55,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   // check is user exist
-  const user = await User.findOne({ email: email });
+  const user = await authSchema.findOne({ email: email });
   if (!user) return res.status(400).send("Email or Password is wrong.");
 
   // if user is found make sure the email and password matches
