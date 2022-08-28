@@ -31,11 +31,11 @@ if (process.env.NODE_ENV == "development") {
 
 // Import Routes
 const authRoute = require("./routes/auth");
-const postRoute = require("./routes/posts");
+const farmRoute = require("./routes/farm");
 
 // Routes Middlewares
 app.use("/api", authRoute);
-app.use("/api", postRoute);
+app.use("/api", farmRoute);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server Running on PORT: ${PORT}`));

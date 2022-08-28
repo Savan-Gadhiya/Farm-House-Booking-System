@@ -3,7 +3,7 @@ const {
   loginValidation,
 } = require("../validators/validation");
 const jwt = require("jsonwebtoken");
-const User = require("../model/User");
+const User = require("../model/userSchema");
 
 // @route    POST api/register
 // @desc     Login User
