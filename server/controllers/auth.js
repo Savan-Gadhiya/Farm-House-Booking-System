@@ -3,13 +3,9 @@ const {
   loginValidation,
 } = require("../validators/validation");
 const jwt = require("jsonwebtoken");
-<<<<<<< HEAD
-const User = require("../model/userSchema");
-=======
 
 const userSchema = require("../model/userSchema");
 const authSchema = require("../model/authSchema");
->>>>>>> e5461e0220903aa07c58a8c55f142ee4ceb0e307
 
 // @route    POST api/register
 // @desc     Login User
