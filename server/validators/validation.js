@@ -40,3 +40,11 @@ exports.addressValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+exports.reviewValidation = (data) => {
+  const schema = Joi.object({
+    rating: Joi.number().min(1).max(5),
+    review: Joi.string().min(3),
+  });
+  return schema.validate(data);
+};
