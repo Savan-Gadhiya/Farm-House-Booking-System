@@ -77,6 +77,10 @@ const farmSchema = new mongoose.Schema(
         type: Date,
       },
     ],
+    isVisible: {
+      type: Boolean,
+      default: true
+    }
   },
   { timestamps: true }
 );

@@ -10,6 +10,10 @@ const reviewSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Farm",
     },
+    bookingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "",
+    },
     rating: {
       type: Number,
       default: 0,

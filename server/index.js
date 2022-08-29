@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const allRoute = require("./routes/index.route");
+const allRoute = require("./routes/index.routes.js");
 
 // Middlewares
 app.use(express.json());
@@ -31,13 +31,13 @@ if (process.env.NODE_ENV == "development") {
 }
 
 // Import Routes
-const authRoute = require("./routes/auth");
-const farmRoute = require("./routes/farm");
+const { sendResponse } = require("./utils/sendResponse");
 
 // Routes Middlewares
 app.use("/api", allRoute);
-app.use("/api", authRoute);
-app.use("/api", farmRoute);
+app.get("/testing", (req, res) => {
+  sendResponse(res, 200, true, "working...", {name: "smitesh"});
+})
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server Running on PORT: ${PORT}`));

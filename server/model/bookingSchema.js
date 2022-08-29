@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // In this file all reference are commented for testing...
-const orderSchema = new mongoose.Schema(
+const bookingSchema = new mongoose.Schema(
 	{
 		farmId: {
 			type: String,
@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema(
 		noOfPeople: {
 			type: Number,
 		},
-		orderDate: {
+		bookingDate: {
 			type: Date,
 			default: Date.now
 		},
@@ -48,4 +48,4 @@ const orderSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Booking", bookingSchema);
