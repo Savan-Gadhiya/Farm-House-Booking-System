@@ -6,10 +6,11 @@ const bookingSchema = require("../../model/bookingSchema");
 exports.bookFarm = async (req, res) => {
   try{
     // validation of farm data
-    // const {error} = 
-  
+    // const {error} =
+
     // getting data from request
-    const {farmId, userId, checkInDate, checkOutDate, price, noOfPeople} = req.body;
+    const { farmId, checkInDate, checkOutDate, totalPrice, noOfPeople } =
+      req.body;
 
     // adding farm 
     const booking = new bookingSchema({

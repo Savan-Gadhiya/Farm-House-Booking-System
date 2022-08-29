@@ -19,9 +19,10 @@ exports.registerFarm = async (req, res) => {
     // unavailableDates,
   } = req.body;
 
-  console.log(req.body)
+  console.log(req.body);
 
   const newFarm = new farmSchema({
+    ownerId: req.user._id,
     farmName,
     description,
     address,
@@ -31,11 +32,14 @@ exports.registerFarm = async (req, res) => {
 
   try {
     const savedFarm = await newFarm.save();
-
+    res.status(200).json({
+      message: "Farm detail added successfully.",
+    });
     // return custom responce
   } catch (err) {
     // send custom responce
+    res.status(500).send("Server crashed...", err);
   }
 
-  res.status(200).send({"data": newFarm})
+  res.status(200).send({ data: newFarm });
 };
