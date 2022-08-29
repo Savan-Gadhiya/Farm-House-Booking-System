@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// In this file all reference are commented for testing...
 const bookingSchema = new mongoose.Schema(
 	{
 		farmId: {
@@ -38,9 +37,8 @@ const bookingSchema = new mongoose.Schema(
 			default: "Success"
 		},
 		reviewId: {
-			type: String
-			// type: mongoose.Schema.Types.ObjectId,
-			// ref: "Review",
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Review",
 		},
 	},
 	{ timestamps: true }
