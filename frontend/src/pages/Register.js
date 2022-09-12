@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
@@ -13,18 +12,21 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-
-import { login_api } from '../api/auth';
+import { register_api } from '../api/auth';
 import Toast from '../utils/ShowToast';
 
-const Login = () => {
-  const [loginDetail, setLoginDetail] = useState({ email: '', password: '' });
+const Register = () => {
+  const [registerDetail, setRegisterDetail] = useState({
+    email: '',
+    password: '',
+    cassword: '',
+    isAdded: 'false',
+  });
   const [toast, showToast] = Toast();
 
   const inputHandler = e => {
-    console.log(loginDetail);
     const { name, value } = e.target;
-    setLoginDetail(prevVal => {
+    setRegisterDetail(prevVal => {
       return {
         ...prevVal,
         [name]: value,
@@ -34,21 +36,25 @@ const Login = () => {
 
   const onSubmit = async () => {
     try {
-      const user = await login_api(loginDetail);
-      console.log(user);
-      if (user.statusCode === 200) {
+      if (registerDetail.password != registerDetail.cpassword) {
         showToast({
-          title: 'Login Successful.',
-          description: 'Enjoy....',
-          status: 'success',
-        });
-      }
-      if (user.statusCode !== 200) {
-        showToast({
-          title: 'Please enter valid details.',
-          description: user.message,
+          title: 'Password is not matching',
+          description: 'Please enter same password.',
           status: 'error',
         });
+      } else {
+        const user = await register_api({
+          email: registerDetail.email,
+          password: registerDetail.password,
+        });
+
+        if (user.data.statusCode === 200) {
+          showToast({
+            title: 'Your account is created.',
+            description: 'Please login.',
+            status: 'success',
+          });
+        }
       }
     } catch (err) {
       showToast({
@@ -66,9 +72,9 @@ const Login = () => {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={10} mx={'auto'} w={'lg'} maxW={'lg'} py={10} px={6}>
+      <Stack spacing={8} mx={'auto'} w={'lg'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Login to your account</Heading>
+          <Heading fontSize={'4xl'}>Register to your account</Heading>
         </Stack>
         <Box
           rounded={'lg'}
@@ -77,7 +83,7 @@ const Login = () => {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
               <Input type="email" name="email" onChange={inputHandler} />
             </FormControl>
@@ -85,15 +91,11 @@ const Login = () => {
               <FormLabel>Password</FormLabel>
               <Input type="password" name="password" onChange={inputHandler} />
             </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                align={'start'}
-                justify={'space-between'}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={'blue.400'}>Forgot password?</Link>
-              </Stack>
+            <FormControl id="cpassword">
+              <FormLabel>Confirm Password</FormLabel>
+              <Input type="password" name="cpassword" onChange={inputHandler} />
+            </FormControl>
+            <Stack spacing={10} pt={3}>
               <Button
                 bg={'blue.400'}
                 color={'white'}
@@ -102,14 +104,14 @@ const Login = () => {
                 }}
                 onClick={onSubmit}
               >
-                Login
+                Register
               </Button>
             </Stack>
             <Stack pt={4}>
               <Text align={'center'}>
-                Don't have an account?{' '}
-                <Link color={'blue.400'} href="/register">
-                  Register
+                Already a user?{' '}
+                <Link color={'blue.400'} href="/login">
+                  Login
                 </Link>
               </Text>
             </Stack>
@@ -120,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
