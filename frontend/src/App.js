@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChakraProvider, Box, Grid, theme } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './utils/ColorModeSwitcher';
+import FarmCard from './layout/shared/FarmCard';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           <ColorModeSwitcher justifySelf="flex-end" />
           <Box>Farm House Booking System</Box>
         </Grid>
+        <FarmCard />
       </Box>
     </ChakraProvider>
   );
