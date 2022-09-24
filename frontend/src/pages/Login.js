@@ -22,7 +22,7 @@ const Login = () => {
   const [toast, showToast] = Toast();
 
   const inputHandler = e => {
-    console.log(loginDetail);
+    // console.log(loginDetail);
     const { name, value } = e.target;
     setLoginDetail(prevVal => {
       return {
@@ -34,19 +34,20 @@ const Login = () => {
 
   const onSubmit = async () => {
     try {
-      const user = await login_api(loginDetail);
-      console.log(user);
-      if (user.statusCode === 200) {
+      const response = await login_api(loginDetail);
+      console.log(response);
+      if (response.statusCode === 200) {
+        localStorage.setItem('token', response.data.token);
         showToast({
           title: 'Login Successful.',
           description: 'Enjoy....',
           status: 'success',
         });
       }
-      if (user.statusCode !== 200) {
+      if (response.statusCode !== 200) {
         showToast({
           title: 'Please enter valid details.',
-          description: user.message,
+          description: response.message,
           status: 'error',
         });
       }

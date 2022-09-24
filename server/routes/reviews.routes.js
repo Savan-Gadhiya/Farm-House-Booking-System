@@ -6,8 +6,7 @@ const {
   getReviewByFarmId,
 } = require("../controllers/farm/review.controller");
 
-const checkAuth = require("../utils/checkAuth");
-// const checkAuth = require("../utils/checkAuth");
+const checkAuth = require("../middleware/checkAuth");
 
 router.post("/addreview", checkAuth, addReview);
 router.put("/updatereview", checkAuth, updateReview);

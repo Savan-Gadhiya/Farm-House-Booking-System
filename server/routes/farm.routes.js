@@ -7,8 +7,7 @@ const {
   getFarmById,
   updateFarmById,
 } = require("../controllers/farm/farm.controller");
-const checkAuth = require("../utils/checkAuth");
-// const checkAuth = require("../utils/checkAuth");
+const checkAuth = require("../middleware/checkAuth");
 
 router.post("/registerFarm", checkAuth, registerFarm);
 router.get("/getAllFarms", getAllFarms);
