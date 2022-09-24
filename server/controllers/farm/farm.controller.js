@@ -15,8 +15,9 @@ exports.registerFarm = async (req, res) => {
     address,
     estimatedCapacity,
     price,
+    coordinates,
     // featuresId,
-    // images,
+    images,
   } = req.body;
 
   const newFarm = new farmSchema({
@@ -24,8 +25,14 @@ exports.registerFarm = async (req, res) => {
     farmName,
     description,
     address,
+    address: {
+      location: {
+        coordinates,
+      },
+    },
     estimatedCapacity,
     price,
+    images,
   });
 
   try {
