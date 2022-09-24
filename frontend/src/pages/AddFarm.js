@@ -22,7 +22,6 @@ import { Wrapper, Status } from '@googlemaps/react-wrapper';
 // import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 export default function SignupCard() {
-  const [showPassword, setShowPassword] = useState(false);
   const [farmDetail, setFarmDetail] = useState({
     farmName: '',
     description: '',
@@ -88,7 +87,6 @@ export default function SignupCard() {
         )
         .then(response => {
           const data = response.data;
-          const fileURL = data.secure_url; // You should store this URL for future references in your app
 
           // console.log(data);
           arr.push({ imageUrl: data.url, publicId: data.public_id });

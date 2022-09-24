@@ -23,8 +23,8 @@ import { UserContext } from '../../routes/MainRoute';
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { loggedIn } = useContext(UserContext);
-  console.log(loggedIn);
+  // const { loggedIn } = useContext(UserContext);
+  // console.log(loggedIn);
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -43,7 +43,7 @@ const NavBar = () => {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-              {loggedIn ? (
+              {true ? (
                 <Flex alignItems={'center'}>
                   <Menu>
                     <MenuButton

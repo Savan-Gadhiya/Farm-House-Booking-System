@@ -1,10 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
+import { Container } from '@chakra-ui/react';
+
 import { Routes, Route } from 'react-router-dom';
 import FarmCard from '../layouts/shared/FarmCard';
 import Footer from '../layouts/shared/Footer';
 import NavBar from '../layouts/shared/NavBar';
-import FarmDetail from '../pages/FarmDetail';
+import AddFarm from '../pages/AddFarm';
 import Gmap from '../pages/Gmap';
+import Farms from '../pages/Farms';
+import Farm from '../pages/Farm';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -14,18 +18,24 @@ export const UserContext = createContext();
 const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   return (
-    <UserContext.Provider value={{ loggedIn }}>
+    // <UserContext.Provider value={{ loggedIn }}>
+    <>
       <NavBar />
-      <Routes>
-        <Route exact path="/" element={<Home />}></Route>
-        <Route exact path="/login" element={<Login />}></Route>
-        <Route exact path="/register" element={<Register />}></Route>
-        <Route exact path="/farmcard" element={<FarmCard />}></Route>
-        <Route exact path="/farmdetail" element={<FarmDetail />}></Route>
-        <Route exact path="/gmaps" element={<Gmap />}></Route>
-      </Routes>
+      <Container maxW="95%">
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/register" element={<Register />}></Route>
+          <Route exact path="/farmcard" element={<FarmCard />}></Route>
+          <Route exact path="/addfarm" element={<AddFarm />}></Route>
+          <Route exact path="/gmaps" element={<Gmap />}></Route>
+          <Route exact path="/farms" element={<Farms />}></Route>
+          <Route exact path="/farms/:farmId" element={<Farm />}></Route>
+        </Routes>
+      </Container>
       <Footer />
-    </UserContext.Provider>
+    </>
+    // </UserContext.Provider>
   );
 };
 
