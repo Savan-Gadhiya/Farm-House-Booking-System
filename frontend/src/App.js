@@ -7,9 +7,7 @@ import Footer from './layouts/shared/Footer';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <NavBar />
       <MainRoute />
-      <Footer />
     </ChakraProvider>
   );
 }

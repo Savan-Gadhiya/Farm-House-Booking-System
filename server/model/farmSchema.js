@@ -33,7 +33,7 @@ const farmSchema = new mongoose.Schema(
       location: {
         type: {
           type: String,
-          default: "Point"
+          default: "Point",
         },
         coordinates: [], //first is longitude and second is latitude
       },
@@ -41,11 +41,11 @@ const farmSchema = new mongoose.Schema(
     estimatedCapacity: {
       type: Number,
     },
-    price: {
+    rents: {
       dateWisePrice: [
         {
           date: Date,
-          price: {
+          rent: {
             type: Number,
             default: 0,
           },
@@ -79,8 +79,8 @@ const farmSchema = new mongoose.Schema(
     ],
     isVisible: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   { timestamps: true }
 );

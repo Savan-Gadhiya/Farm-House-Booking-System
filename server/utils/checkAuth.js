@@ -2,7 +2,9 @@ const jwt = require("jsonwebtoken");
 const authSchema = require("../model/authSchema");
 
 const checkAuth = async (req, res, next) => {
-  const token = req.header("auth-token");
+  // const token = req.header("auth-token");
+  const token = req.body.token;
+  console.log("inside checkAuth ", req.body);
   if (!token) return res.status(401).send("Access Denied");
 
   try {
