@@ -100,6 +100,12 @@ export default function SignupCard() {
     });
   };
 
+  const deleteFile = e => {
+    console.log(e.target.name);
+    const newFiles = files.filter((val, ind) => e.target.name != ind);
+    setFiles(newFiles);
+  };
+
   const handleOnSubmit = async e => {
     e.preventDefault();
     await handleDrop();
@@ -125,6 +131,7 @@ export default function SignupCard() {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
+      {console.log('files ', files)}
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
@@ -212,7 +219,7 @@ export default function SignupCard() {
               />
             </FormControl>
 
-            <FormControl id="files" isRequired>
+            <FormControl id="files" isRequired mb={'7px'}>
               <FormLabel>Images</FormLabel>
               <Input
                 type="file"
@@ -221,6 +228,15 @@ export default function SignupCard() {
                   setFiles(preImg => [...preImg, e.target.files[0]])
                 }
               />
+            </FormControl>
+            <FormControl>
+              {files.map((file, ind) => {
+                return (
+                  <Button onClick={deleteFile} name={ind} ml={'3px'}>
+                    {file.name.substr(0, 6) + '...'}
+                  </Button>
+                );
+              })}
             </FormControl>
 
             <FormControl id="rents" isRequired>

@@ -12,6 +12,7 @@ const checkAuth = async (req, res, next) => {
     // console.log(verified)
     // { _id: '61dc4afe92898efe987e2e53', iat: 1641830535 } => verified will return
     const result = await authSchema.findOne({ _id: verified._id });
+    console.log("result ", verified, result);
     if (!result) {
       return res.status(400).json({
         message: "You must need to login for access this page",

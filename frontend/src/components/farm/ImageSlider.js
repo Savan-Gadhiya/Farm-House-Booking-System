@@ -8,7 +8,7 @@ const ImageSlider = ({ slides }) => {
       {slides.map(slide => {
         return (
           <Image
-            src={slide.image}
+            src={slide.imageUrl ? slide.imageUrl : slide.image}
             height="65vh"
             objectFit="cover"
             width="58vw"

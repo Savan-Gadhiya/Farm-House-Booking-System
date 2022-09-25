@@ -12,14 +12,18 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { login_api } from '../api/auth';
+import { UserContext } from '../routes/MainRoute';
 import Toast from '../utils/ShowToast';
 
 const Login = () => {
   const [loginDetail, setLoginDetail] = useState({ email: '', password: '' });
   const [toast, showToast] = Toast();
+  const navigate = useNavigate();
+  const { loggedIn, setLoggedIn } = useContext(UserContext);
 
   const inputHandler = e => {
     // console.log(loginDetail);
@@ -32,8 +36,9 @@ const Login = () => {
     });
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async e => {
     try {
+      e.preventDefault();
       const response = await login_api(loginDetail);
       console.log(response);
       if (response.statusCode === 200) {
@@ -43,6 +48,8 @@ const Login = () => {
           description: 'Enjoy....',
           status: 'success',
         });
+        setLoggedIn(true);
+        navigate('/');
       }
       if (response.statusCode !== 200) {
         showToast({

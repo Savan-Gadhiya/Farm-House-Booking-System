@@ -10,7 +10,7 @@ const FarmDetails = props => {
 
   return (
     <Box {...props?.style}>
-      {console.log(farmData)}
+      {console.log('farm detail ', farmData)}
       <Heading as="h2" size="xl" noOfLines={1} mt={'2px'}>
         {farmData.farmName}
       </Heading>
