@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Container } from '@chakra-ui/react';
 
 import { Routes, Route } from 'react-router-dom';
@@ -12,30 +12,44 @@ import Farm from '../pages/Farm';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import axios from 'axios';
+import { API } from '../api/api_url';
 
 export const UserContext = createContext();
 
 const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    checkLogin();
+  }, [loggedIn]);
+  const checkLogin = async () => {
+    const token = localStorage.getItem('token');
+    const result = await axios.post(`${API}/auth/checkauth`, {
+      token,
+    });
+    if (result.data.statusCode == 200) setLoggedIn(true);
+    else setLoggedIn(false);
+    console.log('check login ', result);
+  };
   return (
-    // <UserContext.Provider value={{ loggedIn }}>
-    <>
-      <NavBar />
-      <Container maxW="95%">
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-          <Route exact path="/register" element={<Register />}></Route>
-          <Route exact path="/farmcard" element={<FarmCard />}></Route>
-          <Route exact path="/addfarm" element={<AddFarm />}></Route>
-          <Route exact path="/farms" element={<Farms />}></Route>
-          <Route exact path="/farms/:farmId" element={<Farm />}></Route>
-          <Route exact path="/profile" element={<Profile />}></Route>
-        </Routes>
-      </Container>
-      <Footer />
-    </>
-    // </UserContext.Provider>
+    <UserContext.Provider value={{ loggedIn, setLoggedIn }}>
+      <>
+        <NavBar />
+        <Container maxW="95%">
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/login" element={<Login />}></Route>
+            <Route exact path="/register" element={<Register />}></Route>
+            <Route exact path="/farmcard" element={<FarmCard />}></Route>
+            <Route exact path="/addfarm" element={<AddFarm />}></Route>
+            <Route exact path="/farms" element={<Farms />}></Route>
+            <Route exact path="/farms/:farmId" element={<Farm />}></Route>
+            <Route exact path="/profile" element={<Profile />}></Route>
+          </Routes>
+        </Container>
+        <Footer />
+      </>
+    </UserContext.Provider>
   );
 };
 

@@ -106,7 +106,13 @@ export default function SignupCard() {
       console.log('files uploaded... ', arr);
     });
   };
-  // when form is submited
+
+  const deleteFile = e => {
+    console.log(e.target.name);
+    const newFiles = files.filter((val, ind) => e.target.name != ind);
+    setFiles(newFiles);
+  };
+
   const handleOnSubmit = async e => {
     e.preventDefault();
     await handleDrop();
@@ -147,15 +153,18 @@ export default function SignupCard() {
             <Map
               width={'100%'} // default: 100%
               height={'300px'} // default :400px
-              defaultCenter={{ // 23.22620304830154 72.16918945312504 => this is location of ahemdabad
+              defaultCenter={{
+                // 23.22620304830154 72.16918945312504 => this is location of ahemdabad
                 lat: coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
                 lng: coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
               }}
               isMarkerShown
               markerProperty={{
                 position: {
-                  lat: coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
-                  lng: coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
+                  lat:
+                    coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
+                  lng:
+                    coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
                 },
                 draggable: true,
                 onDragEnd: onMarkerChage,
@@ -180,6 +189,19 @@ export default function SignupCard() {
               Add Farm Detail
             </Heading>
             {/* <Text fontSize={'lg'} color={'gray.600'}>
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}
+      bg={useColorModeValue('gray.50', 'gray.800')}
+    >
+      {console.log('files ', files)}
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'} textAlign={'center'}>
+            Add Farm Detail
+          </Heading>
+          {/* <Text fontSize={'lg'} color={'gray.600'}>
             to enjoy all of our cool features ✌️
           </Text> */}
           </Stack>
@@ -259,6 +281,26 @@ export default function SignupCard() {
                   value={farmDetail.description}
                   onChange={handleInput}
                 />
+              </FormControl>
+
+              <FormControl id="files" isRequired mb={'7px'}>
+                <FormLabel>Images</FormLabel>
+                <Input
+                  type="file"
+                  name="files"
+                  onChange={e =>
+                    setFiles(preImg => [...preImg, e.target.files[0]])
+                  }
+                />
+              </FormControl>
+              <FormControl>
+                {files.map((file, ind) => {
+                  return (
+                    <Button onClick={deleteFile} name={ind} ml={'3px'}>
+                      {file.name.substr(0, 6) + '...'}
+                    </Button>
+                  );
+                })}
               </FormControl>
 
               <FormControl id="files" isRequired>
