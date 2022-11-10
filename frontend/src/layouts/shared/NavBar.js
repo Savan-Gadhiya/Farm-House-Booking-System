@@ -24,8 +24,8 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { loggedIn, setLoggedIn } = useContext(UserContext);
-  console.log('login ', loggedIn);
+  const { loggedIn, setLoggedIn, userImg } = useContext(UserContext);
+  console.log('login ', loggedIn, userImg);
 
   useEffect(() => {}, [loggedIn]);
 
@@ -37,7 +37,9 @@ const NavBar = () => {
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>Logo</Box>
+          <Link to={'/'}>
+            <Box>Farm House Booking System</Box>
+          </Link>
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
@@ -61,12 +63,7 @@ const NavBar = () => {
                       cursor={'pointer'}
                       minW={0}
                     >
-                      <Avatar
-                        size={'sm'}
-                        src={
-                          'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                        }
-                      />
+                      <Avatar size={'sm'} src={userImg} />
                     </MenuButton>
                     <MenuList>
                       <Link to={'/profile'}>

@@ -9,16 +9,13 @@ import {
   useColorModeValue,
   HStack,
   Avatar,
-  AvatarBadge,
-  IconButton,
   Center,
   Box,
   RadioGroup,
   Radio,
-  Text,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { API } from '../../api/api_url';
 import { fetchEmail, saveUserData } from '../../api/user.api';
 
 export default function Profile() {
@@ -37,17 +34,28 @@ export default function Profile() {
     state: '',
     pincode: '',
   });
+  const [profileImage, setProfileImage] = useState({
+    imageUrl: '',
+    publicId: '',
+  });
+  const [profileImg, setProfileImg] = useState({});
 
   // get email address of logged in user and display it into email field
   useEffect(() => {
     async function getEmail() {
       const response = await fetchEmail();
       const data = response.data;
-      console.log(response);
+      // console.log('front', response);
       setAddressDetail(prev => {
         return {
           ...prev,
           ...data?.address,
+        };
+      });
+      setProfileImage(prev => {
+        return {
+          ...prev,
+          ...data?.profileImage,
         };
       });
       data.email = data.authId.email;
@@ -84,15 +92,46 @@ export default function Profile() {
       };
     });
   };
+
+  const handleImage = async e => {
+    const formData = new FormData();
+    formData.append('file', profileImg);
+    formData.append('upload_preset', 'smiteshmaniya');
+
+    // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
+    const fileData = await axios.post(
+      'https://api.cloudinary.com/v1_1/dhybpb2nf/image/upload',
+      formData,
+      {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      }
+    );
+    console.log('file data', fileData);
+    return fileData;
+  };
+
   // send data to backend when form is submitted
   const onSubmit = async e => {
     e.preventDefault();
+    let profileImage;
+    if (profileImg.name != null) {
+      console.log('in...');
+      const imageData = await handleImage();
+      console.log('image res ', imageData);
+      profileImage = {
+        imageUrl: imageData.data.url,
+        publicId: imageData.data.public_id,
+      };
+    }
     const compeleteUserDetail = {
       ...userDetail,
       address: addressDetail,
+      profileImage,
     };
-    console.log(compeleteUserDetail);
-    await saveUserData(compeleteUserDetail);
+    console.log('c de', compeleteUserDetail);
+    const data = await saveUserData(compeleteUserDetail);
+    console.log('upd....', data);
+    if (data.statusCode == 200) alert('Your profile is updated.');
   };
   return (
     <Flex
@@ -118,10 +157,14 @@ export default function Profile() {
           <FormLabel>User Image</FormLabel>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
-              <Avatar size="xl" src="https://bit.ly/sage-adebayo"></Avatar>
+              <Avatar size="xl" src={profileImage.imageUrl}></Avatar>
             </Center>
             <Center w="full">
-              <Button w="full">Change Icon</Button>
+              <Input
+                type="file"
+                name="files"
+                onChange={e => setProfileImg(e.target.files[0])}
+              />
             </Center>
           </Stack>
         </FormControl>

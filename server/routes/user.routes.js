@@ -4,12 +4,13 @@ const router = express();
 const {
   updateUserDetails,
   getUserController,
-  getUserEmail
+  getUserDetail,
 } = require("../controllers/user/user.controller");
-const checkAuth = require("../middleware/checkAuth");
+const checkAuth = require("../utils/checkAuth");
+const checkAuth1 = require("../middleware/checkAuth");
 
-router.post("/update", checkAuth, updateUserDetails);
+router.post("/update", checkAuth1, updateUserDetails);
 router.get("/getuser", getUserController);
-router.get("/getEmail", checkAuth, getUserEmail);
+router.post("/getuser", checkAuth, getUserDetail);
 
 module.exports = router;
