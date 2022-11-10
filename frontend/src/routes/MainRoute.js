@@ -7,7 +7,6 @@ import Profile from '../layouts/shared/Profile';
 import Footer from '../layouts/shared/Footer';
 import NavBar from '../layouts/shared/NavBar';
 import AddFarm from '../pages/AddFarm';
-import Gmap from '../pages/Gmap';
 import Farms from '../pages/Farms';
 import Farm from '../pages/Farm';
 import Home from '../pages/Home';
@@ -46,7 +45,6 @@ const MainRoute = () => {
             <Route exact path="/register" element={<Register />}></Route>
             <Route exact path="/farmcard" element={<FarmCard />}></Route>
             <Route exact path="/addfarm" element={<AddFarm />}></Route>
-            <Route exact path="/gmaps" element={<Gmap />}></Route>
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
