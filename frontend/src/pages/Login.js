@@ -15,7 +15,7 @@ import {
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { login_api } from '../api/auth';
+import { login_api } from '../api/auth.api';
 import { UserContext } from '../routes/MainRoute';
 import Toast from '../utils/ShowToast';
 

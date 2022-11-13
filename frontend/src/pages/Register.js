@@ -12,7 +12,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { register_api } from '../api/auth';
+import { register_api } from '../api/auth.api';
 import Toast from '../utils/ShowToast';
 
 const Register = () => {

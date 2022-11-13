@@ -4,6 +4,7 @@ import ImageSlider from './ImageSlider';
 import { SlideData } from './SlideData';
 import FarmDetails from './FarmDetails';
 import FarmBook from './FarmBook';
+import Review from './Review';
 
 const PerticularFarm = farm => {
   return (
@@ -29,6 +30,7 @@ const PerticularFarm = farm => {
           booking={farm.farm.farms[0]}
         />
       </Flex>
+      <Review farmId={farm.farm.farms[0]._id} />
     </Box>
   );
 };
