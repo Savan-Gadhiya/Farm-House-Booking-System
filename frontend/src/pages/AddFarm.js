@@ -42,10 +42,10 @@ export default function SignupCard() {
     state: '',
     pincode: '',
   });
-  const [coordinates, setCoordinates] = useState(['', '']);
+  let coordinates = ['', ''];
+  // const [coordinates, setCoordinates] = useState(['', '']);
   const [files, setFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
-
   const handleInput = e => {
     const { name, value } = e.target;
     setFarmDetail(preVal => {
@@ -69,9 +69,9 @@ export default function SignupCard() {
   const handleLocation = e => {
     navigator.geolocation.getCurrentPosition(position => {
       console.log('geo location ', position);
-      setCoordinates([position.coords.longitude, position.coords.latitude]);
+      coordinates = [position.coords.longitude, position.coords.latitude];
     });
-    console.log('location ', coordinates);
+    // console.log('location ', coordinates);
   };
   var arr = [];
   const handleDrop = async () => {
@@ -133,8 +133,10 @@ export default function SignupCard() {
 
   // when marker position is changed on the google map
   const onMarkerChage = e => {
-    console.log(e.latLng.lat(), e.latLng.lng());
-    setCoordinates([e.latLng.lat(), e.latLng.lng()]);
+    // console.log(e.latLng.lat(), e.latLng.lng());
+    coordinates = [e.latLng.lat(), e.latLng.lng()];
+    // console.log(coordinates);
+    // setCoordinates([e.latLng.lat(), e.latLng.lng()]);
   };
 
   return (
