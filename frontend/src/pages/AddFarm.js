@@ -44,7 +44,7 @@ export default function SignupCard() {
     state: '',
     pincode: '',
   });
-  let coordinates = ['', ''];
+  const [coordinates, setCoordinates] = useState([0, 0]); // this is take location of farm from marker
   const [files, setFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
   const [farmFile, setFarmFile] = useState('');
@@ -94,7 +94,8 @@ export default function SignupCard() {
   const handleLocation = e => {
     navigator.geolocation.getCurrentPosition(position => {
       console.log('geo location ', position);
-      coordinates = [position.coords.longitude, position.coords.latitude];
+      // coordinates = [position.coords.longitude, position.coords.latitude];
+      setCoordinates([position.coords.longitude, position.coords.latitude]);
     });
     console.log('location ', coordinates);
   };
@@ -165,8 +166,10 @@ export default function SignupCard() {
 
   // when marker position is changed on the google map
   const onMarkerChage = e => {
-    coordinates = [e.latLng.lat(), e.latLng.lng()];
-    console.log("coordinates: ", coordinates);
+    // coordinates = [e.latLng.lat(), e.latLng.lng()];
+    // console.log("coordinates: ", coordinates);
+    setCoordinates([e.latLng.lat(), e.latLng.lng()]);
+
   };
 
   return (

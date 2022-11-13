@@ -9,7 +9,6 @@ const OneReview = props => {
   // const [fullName, setFullName] = useState('');
   // let fullName = '...';
   const [fullName, setFullName] = useState('');
-
   useEffect(() => {
     function wrapperFunc() {
       // setFullName(

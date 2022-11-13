@@ -1,10 +1,10 @@
 import { Flex, Circle, Box, Image, useColorModeValue } from '@chakra-ui/react';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardCarousel from './CardCarousel';
 
 const FarmCard = props => {
   const navigate = useNavigate();
-
   return (
     <Flex p={5} alignItems="center">
       <Box
@@ -23,7 +23,8 @@ const FarmCard = props => {
         {/* <CardCarousel id={farmData.id} data={farmData.image} /> */}
         <Image
           // src={props.farmData.image}
-          src={require('../../images/farm_image.jpeg')}
+          // src={require('../../images/farm_image.jpeg')}
+          src = {props.farmData.images[0].imageUrl}
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
         />
