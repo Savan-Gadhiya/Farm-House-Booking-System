@@ -61,14 +61,18 @@ export default function AddFarm() {
 
   const [featureIdhook, setfeatureIdhook] = useState('');
 
-  useEffect(async () => {
-    const getFeaturesFromApi = async () => {
+  useEffect(() => {
+    async function getFeaturesFromApi () {
       const getFeatures = await axios.get(`${API}/feature/getallfeatures`);
       console.log('all features', getFeatures.data.data.data);
-      return getFeatures.data.data.data;
+      setFeatureDetail(getFeatures.data.data.data);
     };
-    const getFeatures = await getFeaturesFromApi();
-    setFeatureDetail(getFeatures);
+    
+    getFeaturesFromApi();
+
+    return () => {
+      console.log('This will be logged on unmount');
+    };
   }, []);
   const [isLoading, setIsLoading] = useState(false); // for displaying spinner on button on submit
 

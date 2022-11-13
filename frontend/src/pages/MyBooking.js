@@ -12,6 +12,10 @@ const MyBooking = () => {
       setBookings(data.data);
     };
     fetchMyBookings();
+
+    return () => {
+      console.log('This will be logged on unmount');
+    };
   }, []);
 
   return (

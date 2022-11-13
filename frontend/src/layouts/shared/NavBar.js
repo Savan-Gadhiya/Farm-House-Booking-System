@@ -90,7 +90,7 @@ const NavBar = () => {
                           <MenuItem>Add Farm</MenuItem>
                         </Link>
                         <Link>
-                          <MenuItem>View Ratins</MenuItem>
+                          <MenuItem>View Rating</MenuItem>
                         </Link>
                         <MenuDivider />
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
