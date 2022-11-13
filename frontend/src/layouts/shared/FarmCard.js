@@ -27,27 +27,18 @@ const FarmCard = props => {
           navigate('/farms/' + props.farmData._id);
         }}
       >
-        {/* {true && (
-          <Badge
-            rounded="full"
-            px="2"
-            fontSize="0.7em"
-            colorScheme="green"
-            size="10px"
-            position="absolute"
-            top={2}
-            right={2}
-            bg="green.200"
-          >verified</Badge>
-        )} */}
-        {/* <CardCarousel id={farmData.id} data={farmData.image} /> */}
         <Image
-          width={'100%'}
-          height={'75%'}
-          src={props.farmData.images[0].imageUrl}
+          // src={props.farmData.image}
+          src={
+            props.farmData.images[0].imageUrl
+              ? props.farmData.images[0].imageUrl
+              : require('../../images/farm_image.jpeg')
+          } //require('../../images/farm_image.jpeg')
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
-          flexGrow={2}
+          width={'100%'}
+          height={'75%'}
+          objectFit="fill"
         />
 
         <Box p="3" flexGrow={1}>

@@ -6,47 +6,50 @@ const { sendResponse } = require("../../utils/sendResponse");
 // @desc     Register Farm
 // @access   Private
 exports.registerFarm = async (req, res) => {
-	// Validation of farm data
+  // Validation of farm data
 
-	const {
-		// ownerId,
-		farmName,
-		description,
-		address,
-		estimatedCapacity,
-		price,
-		coordinates,
-		// featuresId,
-		defaultRent,
-		images,
-		farmDocument,
-	} = req.body;
+  const {
+    // ownerId,
+    farmName,
+    description,
+    address,
+    estimatedCapacity,
+    price,
+    coordinates,
+    featuresId,
+    defaultRent,
+    images,
+    farmDocument,
+  } = req.body;
 
-	const newFarm = new farmSchema({
-		ownerId: req.user._id,
-		farmName,
-		description,
-		address,
-		address: {
-			location: {
-				coordinates,
-			},
-		},
-		estimatedCapacity,
-		rents: { defaultRent },
-		images,
-		farmDocument,
-	});
+  const newFarm = new farmSchema({
+    ownerId: req.user._id,
+    farmName,
+    description,
+    address,
+    address: {
+      location: {
+        coordinates,
+      },
+    },
+    estimatedCapacity,
+    rents: { defaultRent },
+    images,
+    farmDocument,
+    featuresId,
+  });
 
-	try {
-		const savedFarm = await newFarm.save();
+  console.log("feature ids", featuresId);
 
-		sendResponse(res, 200, false, "Farm detail added successfully.", {
-			data: savedFarm,
-		});
-	} catch (err) {
-		sendResponse(res, 500, true, "Server crashed...", { error: err.message });
-	}
+  try {
+    const savedFarm = await newFarm.save();
+
+    sendResponse(res, 200, false, "Farm detail added successfully.", {
+      data: savedFarm,
+    });
+  } catch (err) {
+    sendResponse(res, 500, true, "Server crashed...", { error: err.message });
+  }
 };
 
 // @route    GET api/farm/getAllFarms

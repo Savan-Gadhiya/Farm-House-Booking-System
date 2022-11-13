@@ -17,8 +17,10 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { fetchEmail, saveUserData } from '../../api/user.api';
+import Toast from '../../utils/ShowToast';
 
 export default function Profile() {
+  const [toast, showToast] = Toast();
   const [userDetail, setUserDetail] = useState({
     firstName: '',
     lastName: '',
@@ -128,11 +130,23 @@ export default function Profile() {
       address: addressDetail,
       profileImage,
     };
-    console.log('c de', compeleteUserDetail);
+
     const data = await saveUserData(compeleteUserDetail);
-    console.log('upd....', data);
-    if (data.statusCode == 200) alert('Your profile is updated.');
+    if (data.statusCode == 200) {
+      showToast({
+        title: 'Your data is updated.',
+        description: 'Your data is updated.',
+        status: 'success',
+      });
+    } else {
+      showToast({
+        title: 'Something went wrong.',
+        description: data.error,
+        status: 'error',
+      });
+    }
   };
+
   return (
     <Flex
       minH={'100vh'}
@@ -205,7 +219,7 @@ export default function Profile() {
         </FormControl>
 
         {/* Phone number */}
-        <FormControl id="phoneNumber">
+        <FormControl id="phoneNumber" isRequired>
           <FormLabel>Phone Number</FormLabel>
           <Input
             type="number"
@@ -245,7 +259,7 @@ export default function Profile() {
             value={addressDetail.address}
           />
         </FormControl>
-        <FormControl id="address2" isRequired>
+        <FormControl id="address2">
           <FormLabel>Address2</FormLabel>
           <Input
             type="text"

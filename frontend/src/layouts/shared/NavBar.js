@@ -80,7 +80,7 @@ const NavBar = () => {
                           <MenuItem>Help</MenuItem>
                         </Link>
                         <MenuDivider />
-                        <Link>
+                        <Link to="/mybooking">
                           <MenuItem>My Bookings</MenuItem>
                         </Link>
                         <Link to={'/farms'}>

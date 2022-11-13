@@ -8,7 +8,7 @@ const {
 const checkAuth = require("../utils/checkAuth");
 
 // adding paths
-router.get("/getAllBookingByUserId", checkAuth, getAllBookingByUserId);
+router.post("/getAllBookingByUserId", checkAuth, getAllBookingByUserId);
 router.post("/bookFarm", checkAuth, bookFarm);
 router.post("/getBookingById", checkAuth, getBookingById);
 

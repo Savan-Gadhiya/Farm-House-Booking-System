@@ -11,3 +11,18 @@ export const fetch_farm_reviews = async ({ farmId }) => {
   const response = await res.json();
   return response;
 };
+
+export const add_review = async ({ farmId, bookingId, rating, review }) => {
+  const token = localStorage.getItem('token');
+  const res = await fetch(`${API}/review/addreview`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': token,
+    },
+    body: JSON.stringify({ farmId, bookingId, rating, review }),
+  });
+
+  const response = await res.json();
+  return response;
+};
