@@ -88,7 +88,7 @@ const FarmBook = props => {
     });
   };
 
-  const calculatePrice = () => {
+  const calculateTotalRent = () => {
     var d1 = new Date(range[0].startDate);
     var d2 = new Date(range[0].endDate);
     var day = 0;
@@ -97,7 +97,7 @@ const FarmBook = props => {
       d1.setDate(d1.getDate() + 1);
     }
 
-    return day * farmData.rents.defaultRent; // remaining to set... return default price
+    return day * farmData?.rents?.defaultRent; // remaining to set... return default price
   };
 
   const handleOnSubmit = async () => {
@@ -108,7 +108,7 @@ const FarmBook = props => {
         farmId: farmData._id,
         checkInDate: range[0].startDate,
         checkOutDate: range[0].endDate,
-        totalPrice: calculatePrice(),
+        totalPrice: calculateTotalRent(),
         noOfPeople: otherBookingDetail.noOfPeople,
         token: token,
       });
@@ -129,7 +129,7 @@ const FarmBook = props => {
           </Heading>
         </Stack>
         <Box {...props?.style}>
-          <Text fontSize={'30px'}>&#8377; 20000 </Text>
+          <Text fontSize={'30px'}>&#8377; {farmData?.rents?.defaultRent} </Text>
           <HStack mt={'20px'}>
             <FormControl id="checkInDate" isRequired>
               <FormLabel>checkInDate </FormLabel>
@@ -176,6 +176,7 @@ const FarmBook = props => {
               onChange={handleInput}
             />
           </FormControl>
+          <Text fontSize={'18px'} mt={3}>Total Rent: &#8377; {calculateTotalRent()} </Text>
           <Stack spacing={10} pt={2} mt={'20px'}>
             <Button
               loadingText="Submitting"

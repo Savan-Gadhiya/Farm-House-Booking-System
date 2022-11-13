@@ -21,11 +21,11 @@ const PerticularFarm = farm => {
       </Box>
       <Flex flexDirection={'row'} justifyContent={'space-between'}>
         <FarmDetails
-          style={{ flexBasis: '69%', border: '2px solid white' }}
+          style={{ flexBasis: '69%' }}
           farm={farm.farm.farms[0]}
         />
         <FarmBook
-          style={{ flexBasis: '29%', border: '2px solid red' }}
+          style={{ flexBasis: '29%', boxShadow: '1px 5px 10px #aaaaaa', margin: "5px", padding: "10px"}}
           booking={farm.farm.farms[0]}
         />
       </Flex>

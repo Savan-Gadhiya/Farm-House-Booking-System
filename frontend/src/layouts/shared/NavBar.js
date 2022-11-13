@@ -65,7 +65,7 @@ const NavBar = () => {
                     >
                       <Avatar size={'sm'} src={userImg} />
                     </MenuButton>
-                    <MenuList>
+                    <MenuList zIndex={90}> {/* For solve overlaping image slider zIndex given */}
                       <Link to={'/profile'}>
                         <MenuItem>Profile</MenuItem>
                       </Link>
