@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Grid } from '@chakra-ui/react';
+
 const Home = () => {
   return (
     <Box textAlign="center" fontSize="xl">
@@ -10,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home

@@ -71,9 +71,9 @@ exports.getAllFarms = async (req, res) => {
 exports.getFarmById = async (req, res) => {
   const farmId = req.params.farmId;
   try {
-    const farms = await farmSchema.find({ _id: farmId });
+    const farms = await farmSchema.findById({ _id: farmId });
 
-    sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
+    sendResponse(res, 200, false, "All Farms Fetched", farms);
   } catch (err) {
     sendResponse(res, 400, true, "Some error occured", { error: err.message });
   }
