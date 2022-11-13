@@ -15,14 +15,14 @@ const MyBooking = () => {
   }, []);
 
   return (
-    <>
+    <Box minH="100vh">
       <Heading as="h2" size="xl" p={'25px 0px'}>
         Your Bookings
       </Heading>
       {bookings.map((booking, index) => {
         return <BookingComponent key={index} booking={booking} />;
       })}
-    </>
+    </Box>
   );
 };
 

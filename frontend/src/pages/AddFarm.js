@@ -29,13 +29,17 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { API } from '../api/api_url';
 import Map from '../components/Map';
-export default function SignupCard() {
+import Toast from '../utils/ShowToast';
+
+export default function AddFarm() {
+  const [toast, showToast] = Toast();
+
   const [farmDetail, setFarmDetail] = useState({
     farmName: '',
     description: '',
     estimatedCapacity: 0,
     isVisible: true,
-    defaultRent: ''
+    defaultRent: '',
   });
   const [address, setAddress] = useState({
     addressLine1: '',
@@ -104,6 +108,7 @@ export default function SignupCard() {
 
     const uploaders = files.map(file => {
       // Initial FormData
+
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'smiteshmaniya');
@@ -144,29 +149,54 @@ export default function SignupCard() {
     await handleDrop();
     const idproof = await getFarmDocUrl();
     const token = localStorage.getItem('token');
-    const result = await axios.post(`${API}/farm/registerFarm`, {
-      ...farmDetail,
-      address,
-      coordinates,
-      token,
-      images: arr,
-      farmDocument: {
-        docUrl: idproof.url,
-        publicId: idproof.public_id,
-      },
-    });
-    setIsLoading(false);
-    if (result.data.statusCode === 200) {
-      alert('Your Farm registration is successfull.');
-    } else {
-      alert('Farm registration is failed.');
+
+    let result;
+    try {
+      result = await axios.post(`${API}/farm/registerFarm`, {
+        ...farmDetail,
+        address,
+        coordinates,
+        token,
+        images: arr,
+        farmDocument: {
+          docUrl: idproof.url,
+          publicId: idproof.public_id,
+        },
+      });
+      setIsLoading(false);
+
+      console.log('result: ', result);
+
+      if (result.data.statusCode === 200) {
+        showToast({
+          title: 'Congratulations.',
+          description: 'Your Farm registration is successfull.',
+          status: 'success',
+        });
+        // alert('Your Farm registration is successfull.');
+      } else {
+        showToast({
+          title: 'Farm registration is failed.',
+          description: 'Enter valid data.',
+          status: 'error',
+        });
+        // alert('Farm registration is failed.');
+      }
+    } catch (e) {
+      console.log('result: ', result);
+
+      showToast({
+        title: 'Something went wrong.',
+        description: 'Enter valid data.',
+        status: 'error',
+      });
     }
   };
 
   // when marker position is changed on the google map
   const onMarkerChage = e => {
     coordinates = [e.latLng.lat(), e.latLng.lng()];
-    console.log("coordinates: ", coordinates);
+    console.log('coordinates: ', coordinates);
   };
 
   return (
@@ -183,26 +213,28 @@ export default function SignupCard() {
             </Text>
 
             <AspectRatio ratio={16 / 9}>
-            <Map
-              width={'100%'} // default: 100%
-              height={'300px'} // default :400px
-              defaultCenter={{
-                // 23.22620304830154 72.16918945312504 => this is location of ahemdabad
-                lat: coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
-                lng: coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
-              }}
-              isMarkerShown
-              markerProperty={{
-                position: {
+              <Map
+                width={'100%'} // default: 100%
+                height={'300px'} // default :400px
+                defaultCenter={{
+                  // 23.22620304830154 72.16918945312504 => this is location of ahemdabad
                   lat:
                     coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
                   lng:
                     coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
-                },
-                draggable: true,
-                onDragEnd: onMarkerChage,
-              }}
-            />
+                }}
+                isMarkerShown
+                markerProperty={{
+                  position: {
+                    lat:
+                      coordinates[0] == '' ? 23.22620304830154 : coordinates[0],
+                    lng:
+                      coordinates[1] == '' ? 72.16918945312504 : coordinates[1],
+                  },
+                  draggable: true,
+                  onDragEnd: onMarkerChage,
+                }}
+              />
             </AspectRatio>
           </ModalBody>
           <ModalFooter>
@@ -222,7 +254,6 @@ export default function SignupCard() {
             <Heading fontSize={'4xl'} textAlign={'center'}>
               Add Farm Detail
             </Heading>
-
           </Stack>
           <Box
             rounded={'lg'}
@@ -315,14 +346,18 @@ export default function SignupCard() {
               <FormControl>
                 {files.map((file, ind) => {
                   return (
-                    <Button onClick={deleteFile} name={ind} ml={'3px'} key = {ind}>
-                      {file.name.substr(0, 6) + '...'}   
+                    <Button
+                      onClick={deleteFile}
+                      name={ind}
+                      ml={'3px'}
+                      key={ind}
+                    >
+                      {file.name.substr(0, 6) + '...'}
                     </Button>
                   );
                 })}
               </FormControl>
 
- 
               <FormControl id="files" isRequired mb={'7px'}>
                 <FormLabel>Farm Document</FormLabel>
                 <Input
@@ -333,13 +368,13 @@ export default function SignupCard() {
               </FormControl>
 
               <FormControl id="defaultRent" isRequired>
-              <FormLabel>Default Rent</FormLabel>
-              <Input
-                type="number"
-                name="defaultRent"
-                value={farmDetail.defaultRent}
-                onChange={handleInput}
-              />
+                <FormLabel>Default Rent</FormLabel>
+                <Input
+                  type="number"
+                  name="defaultRent"
+                  value={farmDetail.defaultRent}
+                  onChange={handleInput}
+                />
               </FormControl>
 
               <FormControl id="estimatedCapacity" isRequired>

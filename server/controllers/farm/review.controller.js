@@ -6,7 +6,7 @@ const reviewSchema = require("../../model/reviewSchema");
 const { sendResponse } = require("../../utils/sendResponse");
 const { reviewValidation } = require("../../validators/validation");
 
-// @route    GET api/review/addreview
+// @route    POST api/review/addreview
 // @desc     Add farm review
 // @access   Private
 exports.addReview = async (req, res) => {
@@ -29,6 +29,8 @@ exports.addReview = async (req, res) => {
       rating,
       review,
     });
+
+    console.log(farmId, bookingId, rating, review)
 
     const saveReview = await newreview.save();
     sendResponse(res, 200, true, "Your review saved successfully.", {
