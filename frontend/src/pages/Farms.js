@@ -42,6 +42,7 @@ const Farms = () => {
       {data &&
         data.length > 0 &&
         data.map((farm, index) => {
+          console.log('farm...', farm);
           return <FarmCard farmData={farm} key={index} />;
         })}
     </Box>

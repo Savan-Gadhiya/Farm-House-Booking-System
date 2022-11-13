@@ -16,7 +16,7 @@ exports.registerFarm = async (req, res) => {
     estimatedCapacity,
     price,
     coordinates,
-    // featuresId,
+    featuresId,
     defaultRent,
     images,
     farmDocument,
@@ -36,7 +36,10 @@ exports.registerFarm = async (req, res) => {
     rents: { defaultRent },
     images,
     farmDocument,
+    featuresId,
   });
+
+  console.log("feature ids", featuresId);
 
   try {
     const savedFarm = await newFarm.save();

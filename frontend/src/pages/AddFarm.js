@@ -22,8 +22,9 @@ import {
   useDisclosure,
   Divider,
   Link,
+  Checkbox,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import { API } from '../api/api_url';
@@ -34,7 +35,7 @@ export default function SignupCard() {
     description: '',
     estimatedCapacity: 0,
     isVisible: true,
-    defaultRent: ''
+    defaultRent: '',
   });
   const [address, setAddress] = useState({
     addressLine1: '',
@@ -51,6 +52,19 @@ export default function SignupCard() {
     docUrl: '',
     publicId: '',
   });
+  const [featureDetail, setFeatureDetail] = useState('');
+
+  const [featureIdhook, setfeatureIdhook] = useState('');
+
+  useEffect(async () => {
+    const getFeaturesFromApi = async () => {
+      const getFeatures = await axios.get(`${API}/feature/getallfeatures`);
+      console.log('all features', getFeatures.data.data.data);
+      return getFeatures.data.data.data;
+    };
+    const getFeatures = await getFeaturesFromApi();
+    setFeatureDetail(getFeatures);
+  }, []);
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -138,6 +152,7 @@ export default function SignupCard() {
 
   const handleOnSubmit = async e => {
     e.preventDefault();
+    console.log('fdlfdj...', featureIdhook);
     await handleDrop();
     const idproof = await getFarmDocUrl();
     const token = localStorage.getItem('token');
@@ -151,6 +166,7 @@ export default function SignupCard() {
         docUrl: idproof.url,
         publicId: idproof.public_id,
       },
+      featuresId: featureIdhook,
     });
     if (result.data.statusCode === 200) {
       alert('Your Farm registration is successfull.');
@@ -162,7 +178,28 @@ export default function SignupCard() {
   // when marker position is changed on the google map
   const onMarkerChage = e => {
     coordinates = [e.latLng.lat(), e.latLng.lng()];
-    console.log("coordinates: ", coordinates);
+    console.log('coordinates: ', coordinates);
+  };
+
+  const handleFeature = e => {
+    if (e.target.checked) {
+      // featureIds.push(e.target.name);
+      const nn = e.target.name;
+      setfeatureIdhook(prev => {
+        return [...prev, nn];
+      });
+    }
+    var featureIds1;
+    if (!e.target.checked) {
+      const name = e.target.name;
+      setfeatureIdhook(featureIdhook.filter(item => item !== name));
+      // featureIds1 = featureIds.filter(fe => {
+      //   return fe != e.target.name;
+      // });
+      // featureIds = featureIds1;
+    }
+
+    console.log(featureIdhook);
   };
 
   return (
@@ -216,7 +253,6 @@ export default function SignupCard() {
             <Heading fontSize={'4xl'} textAlign={'center'}>
               Add Farm Detail
             </Heading>
-
           </Stack>
           <Box
             rounded={'lg'}
@@ -286,6 +322,28 @@ export default function SignupCard() {
                 />
               </FormControl>
 
+              <FormControl id="pincode" isRequired>
+                <FormLabel>Features</FormLabel>
+
+                {featureDetail
+                  ? featureDetail.map((feature, ind) => {
+                      return (
+                        <>
+                          <Checkbox
+                            colorScheme="green"
+                            onChange={handleFeature}
+                            name={feature._id}
+                            key={ind}
+                          >
+                            {feature?.featureName}
+                          </Checkbox>
+                          <br />
+                        </>
+                      );
+                    })
+                  : ''}
+              </FormControl>
+
               <FormControl id="description" isRequired>
                 <FormLabel>Description</FormLabel>
                 <Input
@@ -309,14 +367,18 @@ export default function SignupCard() {
               <FormControl>
                 {files.map((file, ind) => {
                   return (
-                    <Button onClick={deleteFile} name={ind} ml={'3px'} key = {ind}>
-                      {file.name.substr(0, 6) + '...'}   
+                    <Button
+                      onClick={deleteFile}
+                      name={ind}
+                      ml={'3px'}
+                      key={ind}
+                    >
+                      {file.name.substr(0, 6) + '...'}
                     </Button>
                   );
                 })}
               </FormControl>
 
- 
               <FormControl id="files" isRequired mb={'7px'}>
                 <FormLabel>Farm Document</FormLabel>
                 <Input
@@ -327,13 +389,13 @@ export default function SignupCard() {
               </FormControl>
 
               <FormControl id="defaultRent" isRequired>
-              <FormLabel>Default Rent</FormLabel>
-              <Input
-                type="number"
-                name="defaultRent"
-                value={farmDetail.defaultRent}
-                onChange={handleInput}
-              />
+                <FormLabel>Default Rent</FormLabel>
+                <Input
+                  type="number"
+                  name="defaultRent"
+                  value={farmDetail.defaultRent}
+                  onChange={handleInput}
+                />
               </FormControl>
 
               <FormControl id="estimatedCapacity" isRequired>

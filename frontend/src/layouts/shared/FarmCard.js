@@ -9,8 +9,7 @@ const FarmCard = props => {
     <Flex p={5} alignItems="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
-        maxW="18em"
-        // minW="18em"
+        minW="18em"
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
@@ -20,12 +19,18 @@ const FarmCard = props => {
           navigate('/farms/' + props.farmData._id);
         }}
       >
-        {/* <CardCarousel id={farmData.id} data={farmData.image} /> */}
         <Image
           // src={props.farmData.image}
-          src={require('../../images/farm_image.jpeg')}
+          src={
+            props.farmData.images[0].imageUrl
+              ? props.farmData.images[0].imageUrl
+              : require('../../images/farm_image.jpeg')
+          } //require('../../images/farm_image.jpeg')
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
+          h="250px"
+          objectFit="fill"
+          w="350px"
         />
 
         <Box p="3">
