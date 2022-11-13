@@ -14,6 +14,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import axios from 'axios';
 import { API } from '../api/api_url';
+import MyBooking from '../pages/MyBooking';
 
 export const UserContext = createContext();
 
@@ -48,6 +49,7 @@ const MainRoute = () => {
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/mybooking" element={<MyBooking />}></Route>
           </Routes>
         </Container>
         <Footer />

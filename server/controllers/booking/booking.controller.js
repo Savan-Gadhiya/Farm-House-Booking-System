@@ -46,7 +46,7 @@ exports.bookFarm = async (req, res) => {
   }
 };
 
-// @route    POST /api/booking/
+// @route    GET /api/booking/getAllBookingByUserId
 // @desc     get all booking of farm Id
 // @access   Private
 exports.getAllBookingByUserId = async (req, res) => {
@@ -62,7 +62,7 @@ exports.getAllBookingByUserId = async (req, res) => {
   }
 };
 
-// @route    POST /api/getbookingById
+// @route    POST /api/booking/getbookingById
 // @desc     get all booking by user Id
 // @access   Private
 exports.getBookingById = async (req, res) => {
