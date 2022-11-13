@@ -42,7 +42,7 @@ const farmSchema = new mongoose.Schema(
       type: Number,
     },
     rents: {
-      dateWisePrice: [
+      dateWiseRent: [
         {
           date: Date,
           rent: {
@@ -51,7 +51,7 @@ const farmSchema = new mongoose.Schema(
           },
         },
       ],
-      defaultPrice: {
+      defaultRent: {
         type: Number,
         default: 0,
       },
@@ -77,6 +77,16 @@ const farmSchema = new mongoose.Schema(
         type: Date,
       },
     ],
+    farmDocument: {
+      docUrl: {
+        type: String,
+        default: "",
+      },
+      publicId: {
+        type: String,
+        default: "",
+      },
+    },
     isVisible: {
       type: Boolean,
       default: true,

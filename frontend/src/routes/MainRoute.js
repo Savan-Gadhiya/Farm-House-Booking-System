@@ -19,20 +19,23 @@ export const UserContext = createContext();
 
 const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userImg, setUserImg] = useState('');
   useEffect(() => {
     checkLogin();
   }, [loggedIn]);
+
   const checkLogin = async () => {
     const token = localStorage.getItem('token');
     const result = await axios.post(`${API}/auth/checkauth`, {
       token,
     });
-    if (result.data.statusCode == 200) setLoggedIn(true);
-    else setLoggedIn(false);
-    console.log('check login ', result);
+    if (result.data.statusCode == 200) {
+      setLoggedIn(true);
+      setUserImg(result.data.data.profileImage.imageUrl);
+    } else setLoggedIn(false);
   };
   return (
-    <UserContext.Provider value={{ loggedIn, setLoggedIn }}>
+    <UserContext.Provider value={{ loggedIn, setLoggedIn, userImg }}>
       <>
         <NavBar />
         <Container maxW="95%">
