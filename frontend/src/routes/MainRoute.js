@@ -14,12 +14,14 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import axios from 'axios';
 import { API } from '../api/api_url';
-
+import { ADMIN_ID } from '../config';
+import VerificationRequests from '../pages/VerificationRequests';
 export const UserContext = createContext();
 
 const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userImg, setUserImg] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     checkLogin();
   }, [loggedIn]);
@@ -29,13 +31,17 @@ const MainRoute = () => {
     const result = await axios.post(`${API}/auth/checkauth`, {
       token,
     });
-    if (result.data.statusCode == 200) {
+    console.log("result.data: :: ", result.data.data._id);
+    if(result.data.data._id === ADMIN_ID){
+      setIsAdmin(true);
+    }
+    if (result.data.statusCode === 200) {
       setLoggedIn(true);
       setUserImg(result.data.data.profileImage.imageUrl);
     } else setLoggedIn(false);
   };
   return (
-    <UserContext.Provider value={{ loggedIn, setLoggedIn, userImg }}>
+    <UserContext.Provider value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg }}>
       <>
         <NavBar />
         <Container maxW="95%">
@@ -48,6 +54,7 @@ const MainRoute = () => {
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/verificationRequests" element={<VerificationRequests />}></Route>
           </Routes>
         </Container>
         <Footer />

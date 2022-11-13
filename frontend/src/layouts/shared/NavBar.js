@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Avatar,
+  AvatarBadge,
   Button,
   Menu,
   MenuButton,
@@ -16,6 +17,7 @@ import {
   InputRightElement,
   Icon,
   Input,
+  Text,
 } from '@chakra-ui/react';
 import { MoonIcon, Search2Icon, SunIcon } from '@chakra-ui/icons';
 import { useContext, useEffect } from 'react';
@@ -24,7 +26,8 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { loggedIn, setLoggedIn, userImg } = useContext(UserContext);
+  const { loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg } =
+    useContext(UserContext);
   console.log('login ', loggedIn, userImg);
 
   useEffect(() => {}, [loggedIn]);
@@ -53,44 +56,77 @@ const NavBar = () => {
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
+
               {loggedIn ? (
-                <Flex alignItems={'center'}>
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      rounded={'full'}
-                      variant={'link'}
-                      cursor={'pointer'}
-                      minW={0}
-                    >
-                      <Avatar size={'sm'} src={userImg} />
-                    </MenuButton>
-                    <MenuList zIndex={90}> {/* For solve overlaping image slider zIndex given */}
-                      <Link to={'/profile'}>
-                        <MenuItem>Profile</MenuItem>
-                      </Link>
-                      <Link>
-                        <MenuItem>Help</MenuItem>
-                      </Link>
-                      <MenuDivider />
-                      <Link>
-                        <MenuItem>My Bookings</MenuItem>
-                      </Link>
-                      <Link to={'/farms'}>
-                        <MenuItem>All Farms</MenuItem>
-                      </Link>
-                      <Link to={'/addfarm'}>
-                        <MenuItem>Add Farm</MenuItem>
-                      </Link>
-                      <Link>
-                        <MenuItem>View Ratins</MenuItem>
-                      </Link>
-                      <MenuDivider />
-                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Flex>
+                !isAdmin ? ( // Normal use is loggedin
+                  <Flex alignItems={'center'}>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        rounded={'full'}
+                        variant={'link'}
+                        cursor={'pointer'}
+                        minW={0}
+                      >
+                        <Avatar size={'sm'} src={userImg} />
+                      </MenuButton>
+                      <MenuList zIndex={90}>
+                        {' '}
+                        {/* For solve overlaping image slider zIndex given */}
+                        <Link to={'/profile'}>
+                          <MenuItem>Profile</MenuItem>
+                        </Link>
+                        <Link>
+                          <MenuItem>Help</MenuItem>
+                        </Link>
+                        <MenuDivider />
+                        <Link>
+                          <MenuItem>My Bookings</MenuItem>
+                        </Link>
+                        <Link to={'/farms'}>
+                          <MenuItem>All Farms</MenuItem>
+                        </Link>
+                        <Link to={'/addfarm'}>
+                          <MenuItem>Add Farm</MenuItem>
+                        </Link>
+                        <Link>
+                          <MenuItem>View Ratins</MenuItem>
+                        </Link>
+                        <MenuDivider />
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Flex>
+                ) : (
+                  // admin is logged in
+                  <Flex alignItems={'center'}>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        rounded={'full'}
+                        variant={'link'}
+                        cursor={'pointer'}
+                        minW={0}
+                      >
+                        <Avatar size={'sm'} src={userImg}>
+                          <AvatarBadge boxSize="1.25em" bg="green.500" />
+                        </Avatar>
+                        {/* <Avatar size={'sm'} src={userImg} /> */}
+                      </MenuButton>
+                      <MenuList zIndex={90}>
+                        {' '}
+                        {/* For solve overlaping image slider zIndex given */}
+                        <Link to={'/verificationRequests'}>
+                          <MenuItem>Verification Requests</MenuItem>
+                        </Link>
+                        <MenuDivider />
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Flex>
+                )
               ) : (
+                // Admin is loggedin
                 <Stack
                   flex={{ base: 1, md: 0 }}
                   justify={'flex-end'}

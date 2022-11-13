@@ -1,5 +1,12 @@
-import { Flex, Circle, Box, Image, useColorModeValue } from '@chakra-ui/react';
-import {  useState } from 'react';
+import {
+  Flex,
+  Circle,
+  Box,
+  Image,
+  useColorModeValue,
+  Badge,
+} from '@chakra-ui/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CardCarousel from './CardCarousel';
 
@@ -9,8 +16,8 @@ const FarmCard = props => {
     <Flex p={5} alignItems="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
-        maxW="18em"
-        // minW="18em"
+        width="18em"
+        minHeight="18em"
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
@@ -20,16 +27,30 @@ const FarmCard = props => {
           navigate('/farms/' + props.farmData._id);
         }}
       >
+        {/* {true && (
+          <Badge
+            rounded="full"
+            px="2"
+            fontSize="0.7em"
+            colorScheme="green"
+            size="10px"
+            position="absolute"
+            top={2}
+            right={2}
+            bg="green.200"
+          >verified</Badge>
+        )} */}
         {/* <CardCarousel id={farmData.id} data={farmData.image} /> */}
         <Image
-          // src={props.farmData.image}
-          // src={require('../../images/farm_image.jpeg')}
-          src = {props.farmData.images[0].imageUrl}
+          width={'100%'}
+          height={'75%'}
+          src={props.farmData.images[0].imageUrl}
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
+          flexGrow={2}
         />
 
-        <Box p="3">
+        <Box p="3" flexGrow={1}>
           <Flex justifyContent="space-between" alignContent="center">
             <Box
               fontSize="xl"
@@ -40,10 +61,27 @@ const FarmCard = props => {
             >
               {props.farmData.farmName}
             </Box>
+
+            <Box>
+              {props.farmData.verificationStatus === "verified" && (
+                <Badge
+                  rounded="full"
+                  px="2"
+                  fontSize="0.7em"
+                  colorScheme="green"
+                >
+                  verified
+                </Badge>
+              )}
+            </Box>
           </Flex>
 
           <Flex justifyContent="space-between" alignContent="center">
-            <Box fontSize="sm" color={useColorModeValue('gray.800', 'white')}>
+            <Box
+              fontSize="sm"
+              color={useColorModeValue('gray.800', 'white')}
+              isTruncated
+            >
               {/* {props.farmData.farmLocation} */}
               {'Surat, Gujarat'}
             </Box>
