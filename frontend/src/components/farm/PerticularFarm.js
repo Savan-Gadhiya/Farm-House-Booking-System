@@ -5,16 +5,18 @@ import { SlideData } from './SlideData';
 import FarmDetails from './FarmDetails';
 import FarmBook from './FarmBook';
 import Review from './Review';
+import FarmMap from './FarmMap';
 
-const PerticularFarm = farm => {
+const PerticularFarm = props => {
+  // console.log("Farm from pertticular farm: ", props.farm);
   return (
     <Box mt={'25px'} mb={'25px'}>
       <Box>
         <Box display={'block'} marginLeft={'auto'} marginRight={'auto'} h="40%">
           <ImageSlider
             slides={
-              farm.farm.farms[0].images.length > 0
-                ? farm.farm.farms[0].images
+              props.farm.images
+                ? props.farm.images
                 : SlideData
             }
           />
@@ -23,14 +25,17 @@ const PerticularFarm = farm => {
       <Flex flexDirection={'row'} justifyContent={'space-between'}>
         <FarmDetails
           style={{ flexBasis: '69%' }}
-          farm={farm.farm.farms[0]}
+          farm={props.farm}
         />
         <FarmBook
-          style={{ flexBasis: '29%', boxShadow: '1px 5px 10px #aaaaaa', margin: "5px", padding: "10px"}}
-          booking={farm.farm.farms[0]}
+          style={{ flexBasis: '29%', boxShadow: '1px 5px 10px #aaaaaa', margin: "5px", padding: "20px"}}
+          booking={props.farm}
         />
       </Flex>
-      <Review farmId={farm.farm.farms[0]._id} />
+      <FarmMap 
+        // coordinates = {lat: }
+       />   {/* Showing location of farm in google map */}
+      <Review farmId={props.farm._id} />
     </Box>
   );
 };
