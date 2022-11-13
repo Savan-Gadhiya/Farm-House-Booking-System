@@ -16,12 +16,17 @@ const OneReview = props => {
       //   props?.review?.User[0]?.firstName + ' ' + props?.review?.User[0]?.lastName
       // );
       setReview(props.review);
-
       setIsLoading(false);
+
+      if(props?.review.User){
+        setFullName(
+          props?.review?.User[0]?.firstName + " " + props?.review?.User[0]?.lastName
+        )
+      }
     }
 
     wrapperFunc();
-  }, []);
+  }, [props]);
 
   if (isLoading) {
     return (
@@ -33,7 +38,8 @@ const OneReview = props => {
 
   return (
     <Box w="xl" borderWidth="1px" borderRadius="lg" overflow="hidden" m={'8px'}>
-      {console.log('props: ', props)}
+      {/* {console.table('props: ', props)} */}
+      {/* {console.log('users: ', props.review.User[0].firstName + props.review.User[0].lastName)} */}
       <Box p="4">
         <Box display="flex">
           <WrapItem>
@@ -45,9 +51,7 @@ const OneReview = props => {
           </WrapItem>
           <Box ml={'8px'}>
             <Box>
-              {/* <Text>{fullName}</Text> */}
-              {/* <Text>{props.firstName}</Text> */}
-              {/* <Text>{props?.review?.User[0]?.firstName}</Text> */}
+              <Text>{fullName}</Text>
             </Box>
 
             <Box display="flex" mt="1" alignItems="center">

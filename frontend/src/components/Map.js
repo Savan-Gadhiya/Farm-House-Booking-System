@@ -36,7 +36,7 @@ const Map = props => {
     withScriptjs,
     withGoogleMap
   )(props => (
-    <GoogleMap defaultZoom={8} defaultCenter={props.defaultCenter}>
+    <GoogleMap defaultZoom={props.zoom ? props.zoom : 8} defaultCenter={props.defaultCenter}>
       {props.isMarkerShown && (
         <Marker
           {...props.markerProperty} // contain position, draggable, onDragEnd function

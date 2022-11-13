@@ -17,7 +17,6 @@ const Farm = props => {
     }
 
     FetchPerticularFarm();
-    console.log('farm ', farmData);
   }, []);
 
   if (isLoading) {

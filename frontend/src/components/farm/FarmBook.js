@@ -129,7 +129,10 @@ const FarmBook = props => {
           </Heading>
         </Stack>
         <Box {...props?.style}>
-          <Text fontSize={'30px'}>&#8377; {farmData?.rents?.defaultRent} </Text>
+          <Text fontSize={'30px'}>
+            &#8377; {farmData?.rents?.defaultRent} 
+            <Text fontSize={'18px'} display={'inline-block'} pl={3}> per day </Text>
+          </Text>
           <HStack mt={'20px'}>
             <FormControl id="checkInDate" isRequired>
               <FormLabel>checkInDate </FormLabel>
