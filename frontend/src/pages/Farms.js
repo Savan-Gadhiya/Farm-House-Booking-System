@@ -1,6 +1,6 @@
 import { Flex, Box } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
-import { get_all_farms_api } from '../api/farm';
+import { get_all_farms_api } from '../api/farm.api';
 import FarmCard from '../layouts/shared/FarmCard';
 
 const farmData = [

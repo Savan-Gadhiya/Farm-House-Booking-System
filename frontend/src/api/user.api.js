@@ -27,3 +27,15 @@ export const saveUserData = async body => {
   const response = await res.json();
   return response;
 };
+
+// get user by userId
+export const get_user_by_userId = async ({ userId }) => {
+  const res = await fetch(`${API}/user/getOneUser/${userId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const response = await res.json();
+  return response;
+};

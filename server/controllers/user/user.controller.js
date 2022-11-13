@@ -6,6 +6,9 @@ const {
 } = require("../../validators/validation");
 const { sendResponse } = require("../../utils/sendResponse");
 
+// @route    POST api/user/update
+// @desc     Update user details
+// @access   Private
 exports.updateUserDetails = async (req, res) => {
   const {
     firstName,
@@ -66,6 +69,9 @@ exports.updateUserDetails = async (req, res) => {
   }
 };
 
+// @route    GET api/user/getuser
+// @desc     Get user details
+// @access   Public
 exports.getUserController = async (req, res) => {
   try {
     const user = await userSchema.find().populate("authId");
@@ -97,6 +103,24 @@ exports.getUserDetail = async (req, res) => {
     }
     await user.populate("authId", { email: 1, _id: 0 });
     // console.log("user: ", user);
+
+    sendResponse(res, 200, true, "", user);
+  } catch (err) {
+    console.log("Error while getting user's email: ", err);
+    sendResponse(res, 500, false, "Bad request");
+  }
+};
+
+// @route    POST api/user/getOneUser/userId
+// @desc     Get particular user by userId
+// @access   Public
+exports.getOneUser = async (req, res) => {
+  try {
+    const _id = req.params.userId;
+    const user = await userSchema.findOne({ authId: _id });
+    if (!user) {
+      sendResponse(res, 200, false, "User not found");
+    }
 
     sendResponse(res, 200, true, "", user);
   } catch (err) {

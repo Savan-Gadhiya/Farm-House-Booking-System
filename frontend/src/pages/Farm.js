@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Container } from '@chakra-ui/react';
-import { get_farm_by_id_api } from '../api/farm';
+import { Box, Container, Spinner } from '@chakra-ui/react';
+import { get_farm_by_id_api } from '../api/farm.api';
 import PerticularFarm from '../components/farm/PerticularFarm';
 
 const Farm = props => {
@@ -21,7 +21,11 @@ const Farm = props => {
   }, []);
 
   if (isLoading) {
-    return <Box>Loading...</Box>;
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
   }
 
   return (
