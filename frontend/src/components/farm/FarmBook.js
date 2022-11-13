@@ -29,7 +29,7 @@ const FarmBook = props => {
   const [range, setRange] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 2),
       key: 'selection',
     },
   ]);
@@ -89,7 +89,15 @@ const FarmBook = props => {
   };
 
   const calculatePrice = () => {
-    return 20000; // remaining to set... return default price
+    var d1 = new Date(range[0].startDate);
+    var d2 = new Date(range[0].endDate);
+    var day = 0;
+    while (d1 <= d2) {
+      day += 1;
+      d1.setDate(d1.getDate() + 1);
+    }
+
+    return day * farmData.rents.defaultRent; // remaining to set... return default price
   };
 
   const handleOnSubmit = async () => {
@@ -104,15 +112,14 @@ const FarmBook = props => {
         noOfPeople: otherBookingDetail.noOfPeople,
         token: token,
       });
-      console.log('result ', result);
       if (result.data.statusCode === 200) {
         alert('Farm is booked.');
       }
     } catch (err) {
       alert('something went wrong from frontend.');
+      console.log(err);
     }
   };
-
   return (
     <Flex minH={'100vh'} bg={useColorModeValue('gray.10', 'gray.800')}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} px={6}>
@@ -120,9 +127,6 @@ const FarmBook = props => {
           <Heading fontSize={'4xl'} textAlign={'center'}>
             Book Farm
           </Heading>
-          {/* <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
-          </Text> */}
         </Stack>
         <Box {...props?.style}>
           <Text fontSize={'30px'}>&#8377; 20000 </Text>

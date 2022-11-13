@@ -12,6 +12,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useDisclosure,
   Link,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -26,7 +27,7 @@ export default function SignupCard() {
     farmName: '',
     description: '',
     estimatedCapacity: 0,
-    rents: 0,
+    defaultRent: 0,
     isVisible: true,
   });
   const [address, setAddress] = useState({
@@ -36,8 +37,15 @@ export default function SignupCard() {
     state: '',
     pincode: '',
   });
-  const [coordinates, setCoordinates] = useState('');
+  let coordinates = ['', ''];
+  // const [coordinates, setCoordinates] = useState(['', '']);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
   const [files, setFiles] = useState([]);
+  const [farmFile, setFarmFile] = useState('');
+  const [farmDocument, setFarmDocument] = useState({
+    docUrl: '',
+    publicId: '',
+  });
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -62,9 +70,9 @@ export default function SignupCard() {
   const handleLocation = e => {
     navigator.geolocation.getCurrentPosition(position => {
       console.log('geo location ', position);
-      setCoordinates([position.coords.longitude, position.coords.latitude]);
+      coordinates = [position.coords.longitude, position.coords.latitude];
     });
-    console.log('location ', coordinates);
+    // console.log('location ', coordinates);
   };
   var arr = [];
   const handleDrop = async () => {
@@ -100,6 +108,23 @@ export default function SignupCard() {
     });
   };
 
+  const getFarmDocUrl = async () => {
+    const formData = new FormData();
+    formData.append('file', farmFile);
+    formData.append('upload_preset', 'smiteshmaniya');
+
+    // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
+    const fileData = await axios.post(
+      'https://api.cloudinary.com/v1_1/dhybpb2nf/image/upload',
+      formData,
+      {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      }
+    );
+    console.log('file data', fileData);
+    return fileData.data;
+  };
+
   const deleteFile = e => {
     console.log(e.target.name);
     const newFiles = files.filter((val, ind) => e.target.name != ind);
@@ -109,19 +134,33 @@ export default function SignupCard() {
   const handleOnSubmit = async e => {
     e.preventDefault();
     await handleDrop();
+    const idproof = await getFarmDocUrl();
     const token = localStorage.getItem('token');
+    console.log('id...', idproof);
     const result = await axios.post(`${API}/farm/registerFarm`, {
       ...farmDetail,
       address,
       coordinates,
       token,
       images: arr,
+      farmDocument: {
+        docUrl: idproof.url,
+        publicId: idproof.public_id,
+      },
     });
     if (result.data.statusCode === 200) {
       alert('Your Farm registration is successfull.');
     } else {
       alert('Farm registration is failed.');
     }
+  };
+
+  // when marker position is changed on the google map
+  const onMarkerChage = e => {
+    // console.log(e.latLng.lat(), e.latLng.lng());
+    coordinates = [e.latLng.lat(), e.latLng.lng()];
+    // console.log(coordinates);
+    // setCoordinates([e.latLng.lat(), e.latLng.lng()]);
   };
 
   return (
@@ -229,6 +268,16 @@ export default function SignupCard() {
                 }
               />
             </FormControl>
+
+            <FormControl id="files" isRequired mb={'7px'}>
+              <FormLabel>Farm Document</FormLabel>
+              <Input
+                type="file"
+                name="files"
+                onChange={e => setFarmFile(e.target.files[0])}
+              />
+            </FormControl>
+
             <FormControl>
               {files.map((file, ind) => {
                 return (
@@ -239,12 +288,12 @@ export default function SignupCard() {
               })}
             </FormControl>
 
-            <FormControl id="rents" isRequired>
-              <FormLabel>Rent</FormLabel>
+            <FormControl id="defaultRent" isRequired>
+              <FormLabel>Default Rent</FormLabel>
               <Input
                 type="text"
-                name="rents"
-                value={farmDetail.rents}
+                name="defaultRent"
+                value={farmDetail.defaultRent}
                 onChange={handleInput}
               />
             </FormControl>

@@ -3,8 +3,8 @@ const authSchema = require("../model/authSchema");
 const { sendResponse } = require("../utils/sendResponse");
 
 const checkAuth = async (req, res, next) => {
-  // const token = req.header("auth-token");
-  const token = req.body.token;
+  const token = req.header("auth-token");
+  // const token = req.body.token;
   if (!token) return sendResponse(res, 401, false, "Access Denied");
   // return res.status(401).send("Access Denied");
 

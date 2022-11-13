@@ -87,7 +87,11 @@ exports.login = async (req, res) => {
 // @access   Private
 exports.logout = async (req, res) => {
   try {
-    sendResponse(res, 200, true, "You are logged out.");
+    const userData = await userSchema.findOne(
+      { authId: req.user._id },
+      { profileImage: 1 }
+    );
+    sendResponse(res, 200, true, "You are already loggedIn.", userData);
   } catch (err) {
     return sendResponse(res, 400, false, "Something went wrong.", {
       error: err,

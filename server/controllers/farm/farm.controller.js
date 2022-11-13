@@ -17,7 +17,9 @@ exports.registerFarm = async (req, res) => {
     price,
     coordinates,
     // featuresId,
+    defaultRent,
     images,
+    farmDocument,
   } = req.body;
 
   const newFarm = new farmSchema({
@@ -31,8 +33,9 @@ exports.registerFarm = async (req, res) => {
       },
     },
     estimatedCapacity,
-    price,
+    rents: { defaultRent },
     images,
+    farmDocument,
   });
 
   try {

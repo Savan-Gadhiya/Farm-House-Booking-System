@@ -36,8 +36,8 @@ const userSchema = new mongoose.Schema(
     //   // default: '',
     // },
     profileImage: {
-      // imageUrl: { type: String, default: "" },
-      // publicId: { type: String, default: "" },
+      imageUrl: { type: String, default: "" },
+      publicId: { type: String, default: "" },
     },
     address: {
       address: {

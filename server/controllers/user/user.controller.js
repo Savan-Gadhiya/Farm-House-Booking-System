@@ -18,7 +18,7 @@ exports.updateUserDetails = async (req, res) => {
     gender,
     dob,
     // idProof,
-    // profileImage,
+    profileImage,
     address,
   } = req.body;
 
@@ -56,7 +56,7 @@ exports.updateUserDetails = async (req, res) => {
         gender,
         dob,
         // idProof,
-        // profileImage,
+        profileImage,
         authId: req.user._id,
         address,
       }
@@ -87,18 +87,17 @@ exports.getUserController = async (req, res) => {
   }
 };
 
-// @route    GET api/user/getEmail
-// @desc     Get User Email id by userId
-// @access   Private
-exports.getUserEmail = async (req, res) => {
+exports.getUserDetail = async (req, res) => {
   try {
+    console.log("email");
     const userId = req.user._id;
     // const auth = await authSchema.findOne({_id: userId});
-    // console.log(userId);
+    console.log(userId);
     const user = await userSchema.findOne(
       { authId: userId },
       { wishList: 0, createdAt: 0, updatedAt: 0 }
     );
+    console.log("ser", user);
     if (user == null) {
       return sendResponse(res, 400, false, "User not found!");
     }
