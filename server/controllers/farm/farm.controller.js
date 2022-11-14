@@ -6,50 +6,50 @@ const { sendResponse } = require("../../utils/sendResponse");
 // @desc     Register Farm
 // @access   Private
 exports.registerFarm = async (req, res) => {
-  // Validation of farm data
+	// Validation of farm data
 
-  const {
-    // ownerId,
-    farmName,
-    description,
-    address,
-    estimatedCapacity,
-    price,
-    coordinates,
-    featuresId,
-    defaultRent,
-    images,
-    farmDocument,
-  } = req.body;
+	const {
+		// ownerId,
+		farmName,
+		description,
+		address,
+		estimatedCapacity,
+		price,
+		coordinates,
+		featuresId,
+		defaultRent,
+		images,
+		farmDocument,
+	} = req.body;
 
-  const newFarm = new farmSchema({
-    ownerId: req.user._id,
-    farmName,
-    description,
-    address,
-    address: {
-      location: {
-        coordinates,
-      },
-    },
-    estimatedCapacity,
-    rents: { defaultRent },
-    images,
-    farmDocument,
-    featuresId,
-  });
+	const newFarm = new farmSchema({
+		ownerId: req.user._id,
+		farmName,
+		description,
+		address: {
+			...address,
+			location: {
+				coordinates,
+			},
+		},
+		estimatedCapacity,
+		rents: { defaultRent },
+		images,
+		farmDocument,
+		featuresId,
+	});
 
-  console.log("feature ids", featuresId);
+	console.log("feature ids", featuresId);
 
-  try {
-    const savedFarm = await newFarm.save();
+	try {
+		const savedFarm = await newFarm.save();
 
-    sendResponse(res, 200, false, "Farm detail added successfully.", {
-      data: savedFarm,
-    });
-  } catch (err) {
-    sendResponse(res, 500, true, "Server crashed...", { error: err.message });
-  }
+		sendResponse(res, 200, false, "Farm detail added successfully.", {
+			data: savedFarm,
+		});
+	} catch (err) {
+		sendResponse(res, 500, true, "Server crashed...", { error: err.message });
+	}
 };
 
 // @route    GET api/farm/getAllFarms
@@ -65,11 +65,12 @@ exports.getAllFarms = async (req, res) => {
 	}
 };
 
-// @route    GET api/farm/getFarmById/farmId
+// @route    GET api/farm/getFarmById/:farmId
 // @desc     Get Farm by Id
 // @access   Public
 exports.getFarmById = async (req, res) => {
 	const farmId = req.params.farmId;
+	// console.log("farmId: ", farmId);
 	try {
 		const farms = await farmSchema.findById({ _id: farmId });
 
@@ -100,36 +101,41 @@ exports.updateFarmById = async (req, res) => {
 
 // ------------------------ Below APIs is only for admin --------------------------------
 
-
 // @route    POST api/farm/updateVerificationStatus
 // @desc     This will used to change the verification status of farm
 // @access   Private (Only admin can do this)
 exports.ChangeVerificationStatus = async (req, res) => {
 	try {
 		const farmId = req.body.farmId;
-		const verificationStatus = req.body.verificationStaus;
-
-		const res = await farmSchema.findByIdAndUpdate(
+		const verificationStatus = req.body.verificationStatus;
+		// console.log("verification status; ", verificationStatus, " id: ", farmId);
+		
+		const result = await farmSchema.findByIdAndUpdate(
 			{ _id: farmId },
-			{ verificationStatus }
+			{$set: { verificationStatus }},
+			{new: true}
 		);
-    if(res)
-      sendResponse(res, 200, false, "Verification status updated");
+		console.log("result: ", result);
+		if (result) sendResponse(res, 200, false, "Verification status updated");
 	} catch (err) {
 		console.log("Error while change verification status: ", err);
 		sendResponse(res, 400, true, "Some Error occured", { error: err.message });
 	}
 };
 
-
 // @route    GET api/farm/getPendingFarms
 // @desc     This API will give all farms which verifation status is in pending
 // @access   Private (Only admin can do this)
 exports.getPendingFarms = async (req, res) => {
-	try{
-		const res = await farmSchema.find({})
+	try {
+		console.log("request come");
+		const result = await farmSchema.find({"verificationStatus": "pending"});
+		if(result)
+			return sendResponse(res, 200, false, "All farms with verification status is pending", result);
+		else 
+			return sendResponse(res, 200, false, "no data found");
+	} catch (err) {
+		console.log("Error while feching a farm with verification status pending: ", err);
+		sendResponse(res, 500, true, "server Error");
 	}
-	catch(err){
-
-	}
-}
+};

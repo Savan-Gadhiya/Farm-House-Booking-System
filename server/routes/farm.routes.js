@@ -6,13 +6,19 @@ const {
   getAllFarms,
   getFarmById,
   updateFarmById,
+  getPendingFarms,
+  ChangeVerificationStatus,
 } = require("../controllers/farm/farm.controller");
 const checkAuth = require("../utils/checkAuth");
+const checkAdminAuth = require("../utils/checkAuthAdmin");
 
 router.post("/registerFarm", checkAuth, registerFarm);
 router.get("/getAllFarms", getAllFarms);
 router.get("/getFarmById/:farmId", getFarmById);
 router.put("/updateFarmById/:farmId", updateFarmById);
+
+router.post("/getPendingFarms", checkAdminAuth,  getPendingFarms);
+router.post("/ChangeVerificationStatus", checkAdminAuth, ChangeVerificationStatus);
 
 
 module.exports = router;

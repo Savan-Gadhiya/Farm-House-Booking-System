@@ -40,16 +40,17 @@ const BookingComponent = props => {
   const [toast, showToast] = Toast();
 
   useEffect(() => {
-    const farmId = props.booking.farmId;
+    const farmId = props?.booking?.farmId;
     const fetchFarms = async () => {
       const data = await get_farm_by_id_api(farmId);
-      console.log(data.data);
+      console.log("data is: ",data);
       setFarm(data.data);
     };
 
     fetchFarms();
     setIsLoading(false);
-  }, []);
+    console.log("props in booking component : ", props);
+  }, [props]);
 
   const property = {
     farmName: 'Modern home in city center in the heart of historic Los Angeles',
@@ -68,8 +69,8 @@ const BookingComponent = props => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    const farmId = props.booking.farmId;
-    const bookingId = props.booking._id;
+    const farmId = props.booking?.farmId;
+    const bookingId = props.booking?._id;
 
     if (writeReview.length > 0) {
       const data = await add_review({
@@ -100,11 +101,11 @@ const BookingComponent = props => {
       {/* {console.log('farm: ', farm.farmName)} */}
       {console.log(writeReview)}
 
-      <Box p="6" display={'flex'} flexDirection="row">
+      <Box p={'2'} display={'flex'} flexDirection="row">
         <Box>
           <Image
             boxSize={'160px'}
-            src={farm.images ? farm.images[0].imageUrl : ''}
+            src={farm?.images ? farm?.images[0]?.imageUrl : ''}
           />
         </Box>
         <Box ml={'15px'}>
@@ -116,32 +117,32 @@ const BookingComponent = props => {
             noOfLines={1}
             fontSize={'22px'}
           >
-            {farm.farmName}
+            {farm?.farmName}
           </Box>
 
           <Box>
-            {props.booking.totalPrice}
+          &#8377;   {props?.booking?.totalPrice}
             <Box as="span" color="gray.600" fontSize="sm">
               {' '}
               total pay
             </Box>
           </Box>
 
-          <Box display="flex" mt="2" alignItems="center">
+          <Box display="flex" mt={'3'} alignItems="center">
             {Array(5)
               .fill('')
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < property.rating ? 'teal.500' : 'gray.300'}
+                  color={i < property?.rating ? 'teal.500' : 'gray.300'}
                 />
               ))}
             <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
+              {property?.reviewCount} reviews
             </Box>
           </Box>
 
-          <Button onClick={onOpen}>Write Review</Button>
+          <Button onClick={onOpen} mt={3}>Write Review</Button>
 
           {/* model start */}
           <Modal
