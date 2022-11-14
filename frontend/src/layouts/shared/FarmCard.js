@@ -54,7 +54,7 @@ const FarmCard = props => {
             </Box>
 
             <Box>
-              {props.farmData.verificationStatus === "verified" && (
+              {props.farmData.verificationStatus === 'verified' && (
                 <Badge
                   rounded="full"
                   px="2"
@@ -74,7 +74,9 @@ const FarmCard = props => {
               isTruncated
             >
               {/* {props.farmData.farmLocation} */}
-              {'Surat, Gujarat'}
+              {props.farmData.address.city +
+                ', ' +
+                props.farmData.address.state}
             </Box>
           </Flex>
         </Box>
