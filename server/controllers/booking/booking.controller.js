@@ -16,7 +16,6 @@ exports.bookFarm = async (req, res) => {
     // getting data from request
     const { farmId, checkInDate, checkOutDate, totalPrice, noOfPeople } =
       req.body;
-    console.log(req.body);
     // adding farm
     const booking = new bookingSchema({
       farmId,
@@ -37,11 +36,9 @@ exports.bookFarm = async (req, res) => {
       { _id: farmId },
       { $push: { unavailableDates: { $each: dateArray } } }
     );
-    console.log("in res", result);
     // sending response
     sendResponse(res, 200, true, "Farm booked Successfully", savedbooking);
   } catch (err) {
-    console.log("Error while making a booking: ", err);
     sendResponse(res, 500, false, "Server Error", err);
   }
 };
@@ -57,7 +54,6 @@ exports.getAllBookingByUserId = async (req, res) => {
     // send response
     sendResponse(res, 200, true, "Data fetch Successfully", data);
   } catch (err) {
-    console.log("Error while fetching all booking by userid ", err.message);
     sendResponse(res, 500, false, "Server Error...");
   }
 };
@@ -77,7 +73,6 @@ exports.getBookingById = async (req, res) => {
     // Send response
     sendResponse(res, 200, true, "Data fetch Successfully", data);
   } catch (err) {
-    console.log("Error while fatching record by booking id: ", err.message);
     sendResponse(res, 500, false, "Server Error...");
   }
 };

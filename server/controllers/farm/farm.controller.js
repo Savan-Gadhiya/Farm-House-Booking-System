@@ -39,8 +39,6 @@ exports.registerFarm = async (req, res) => {
     featuresId,
   });
 
-  console.log("feature ids", featuresId);
-
   try {
     const savedFarm = await newFarm.save();
 
@@ -56,80 +54,73 @@ exports.registerFarm = async (req, res) => {
 // @desc     Get All Farms
 // @access   Public
 exports.getAllFarms = async (req, res) => {
-	try {
-		const farms = await farmSchema.find({});
+  try {
+    const farms = await farmSchema.find({});
 
-		sendResponse(res, 200, true, "All Farms Fetched", { farms: farms });
-	} catch (err) {
-		sendResponse(res, 400, false, "Some error occured", { error: err.message });
-	}
+    sendResponse(res, 200, true, "All Farms Fetched", { farms: farms });
+  } catch (err) {
+    sendResponse(res, 400, false, "Some error occured", { error: err.message });
+  }
 };
 
 // @route    GET api/farm/getFarmById/farmId
 // @desc     Get Farm by Id
 // @access   Public
 exports.getFarmById = async (req, res) => {
-	const farmId = req.params.farmId;
-	try {
-		const farms = await farmSchema.findById({ _id: farmId });
+  const farmId = req.params.farmId;
+  try {
+    const farms = await farmSchema.findById({ _id: farmId });
 
-		sendResponse(res, 200, false, "All Farms Fetched", farms);
-	} catch (err) {
-		sendResponse(res, 400, true, "Some error occured", { error: err.message });
-	}
+    sendResponse(res, 200, false, "All Farms Fetched", farms);
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
 };
 
 // @route    PUT api/farm/updateFarmById
 // @desc     Update Farm By Id
 // @access   Private
 exports.updateFarmById = async (req, res) => {
-	const farmId = req.params.farmId;
-	try {
-		const farms = await farmSchema.findByIdAndUpdate(
-			{ _id: farmId },
-			req.body,
-			{
-				new: true,
-			}
-		);
-		sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
-	} catch (err) {
-		sendResponse(res, 400, true, "Some error occured", { error: err.message });
-	}
+  const farmId = req.params.farmId;
+  try {
+    const farms = await farmSchema.findByIdAndUpdate(
+      { _id: farmId },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
 };
 
 // ------------------------ Below APIs is only for admin --------------------------------
-
 
 // @route    POST api/farm/updateVerificationStatus
 // @desc     This will used to change the verification status of farm
 // @access   Private (Only admin can do this)
 exports.ChangeVerificationStatus = async (req, res) => {
-	try {
-		const farmId = req.body.farmId;
-		const verificationStatus = req.body.verificationStaus;
+  try {
+    const farmId = req.body.farmId;
+    const verificationStatus = req.body.verificationStaus;
 
-		const res = await farmSchema.findByIdAndUpdate(
-			{ _id: farmId },
-			{ verificationStatus }
-		);
-    if(res)
-      sendResponse(res, 200, false, "Verification status updated");
-	} catch (err) {
-		console.log("Error while change verification status: ", err);
-		sendResponse(res, 400, true, "Some Error occured", { error: err.message });
-	}
+    const res = await farmSchema.findByIdAndUpdate(
+      { _id: farmId },
+      { verificationStatus }
+    );
+    if (res) sendResponse(res, 200, false, "Verification status updated");
+  } catch (err) {
+    sendResponse(res, 400, true, "Some Error occured", { error: err.message });
+  }
 };
-
 
 // @route    GET api/farm/getPendingFarms
 // @desc     This API will give all farms which verifation status is in pending
 // @access   Private (Only admin can do this)
 exports.getPendingFarms = async (req, res) => {
-	try{
-		const res = await farmSchema.find({})
-	}
-	catch(err){
-
-	}
-}
+  try {
+    const res = await farmSchema.find({});
+  } catch (err) {}
+};

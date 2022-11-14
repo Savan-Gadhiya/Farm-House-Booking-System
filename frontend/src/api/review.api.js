@@ -26,3 +26,17 @@ export const add_review = async ({ farmId, bookingId, rating, review }) => {
   const response = await res.json();
   return response;
 };
+
+export const fetch_review_by_bookingId = async ({ bookingId }) => {
+  const token = localStorage.getItem('token');
+  const res = await fetch(`${API}/review/getReviewByBookingId`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': token,
+    },
+    body: JSON.stringify({ bookingId }),
+  });
+  const response = await res.json();
+  return response;
+};

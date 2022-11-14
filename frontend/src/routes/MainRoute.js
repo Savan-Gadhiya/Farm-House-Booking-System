@@ -24,6 +24,7 @@ const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userImg, setUserImg] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
     checkLogin();
   }, [loggedIn]);
@@ -33,8 +34,7 @@ const MainRoute = () => {
     const result = await axios.post(`${API}/auth/checkauth`, {
       token,
     });
-    console.log("result.data: :: ", result.data.data._id);
-    if(result.data.data._id === ADMIN_ID){
+    if (result.data.data._id === ADMIN_ID) {
       setIsAdmin(true);
     }
     if (result.data.statusCode === 200) {
@@ -43,7 +43,9 @@ const MainRoute = () => {
     } else setLoggedIn(false);
   };
   return (
-    <UserContext.Provider value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg }}>
+    <UserContext.Provider
+      value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg }}
+    >
       <>
         <NavBar />
         <Container maxW="95%">
@@ -56,7 +58,11 @@ const MainRoute = () => {
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
-            <Route exact path="/verificationRequests" element={<VerificationRequests />}></Route>
+            <Route
+              exact
+              path="/verificationRequests"
+              element={<VerificationRequests />}
+            ></Route>
             <Route exact path="/mybooking" element={<MyBooking />}></Route>
           </Routes>
         </Container>

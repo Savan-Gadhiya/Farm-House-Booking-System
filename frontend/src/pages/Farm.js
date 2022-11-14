@@ -9,13 +9,13 @@ const Farm = props => {
   const [farmData, setFarmData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function FetchPerticularFarm() {
-      const res = await get_farm_by_id_api(_id);
-      setIsLoading(false);
-      setFarmData(res.data);
-    }
+  const FetchPerticularFarm = async () => {
+    const res = await get_farm_by_id_api(_id);
+    setIsLoading(false);
+    setFarmData(res.data);
+  }
 
+  useEffect(() => {
     FetchPerticularFarm();
   }, []);
 

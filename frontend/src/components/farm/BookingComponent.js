@@ -3,6 +3,7 @@ import {
   Box,
   Flex,
   Image,
+  Text,
   Button,
   Badge,
   Modal,
@@ -22,7 +23,7 @@ import {
 import { StarIcon } from '@chakra-ui/icons';
 import { get_farm_by_id_api } from '../../api/farm.api';
 import Rating from './Rating';
-import { add_review } from '../../api/review.api';
+import { add_review, fetch_review_by_bookingId } from '../../api/review.api';
 import Toast from '../../utils/ShowToast';
 
 const BookingComponent = props => {
@@ -35,19 +36,29 @@ const BookingComponent = props => {
   const finalRef = React.useRef(null);
 
   const [writeReview, setWriteReview] = useState('');
-  const [writeRating, setWriteRating] = useState(3);
+  const [writeRating, setWriteRating] = useState(0);
 
   const [toast, showToast] = Toast();
 
-  useEffect(() => {
-    const farmId = props.booking.farmId;
-    const fetchFarms = async () => {
-      const data = await get_farm_by_id_api(farmId);
-      console.log(data.data);
-      setFarm(data.data);
-    };
+  const farmId = props.booking.farmId;
 
+  const fetchFarms = async () => {
+    const data = await get_farm_by_id_api(farmId);
+    setFarm(data.data);
+  };
+
+  const fetchReview = async () => {
+    const data = await fetch_review_by_bookingId({
+      bookingId: props.booking._id,
+    });
+    setWriteReview(data.data.data.review);
+    setWriteRating(data.data.data.rating);
+  };
+
+  useEffect(() => {
     fetchFarms();
+    fetchReview();
+
     setIsLoading(false);
   }, []);
 
@@ -96,10 +107,6 @@ const BookingComponent = props => {
 
   return (
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      {console.log(props.booking)}
-      {/* {console.log('farm: ', farm.farmName)} */}
-      {console.log(writeReview)}
-
       <Box p="6" display={'flex'} flexDirection="row">
         <Box>
           <Image
@@ -127,18 +134,16 @@ const BookingComponent = props => {
             </Box>
           </Box>
 
-          <Box display="flex" mt="2" alignItems="center">
+          <Text mt={2}>Your Rating</Text>
+          <Box display="flex" mt="0" alignItems="center">
             {Array(5)
               .fill('')
               .map((_, i) => (
                 <StarIcon
                   key={i}
-                  color={i < property.rating ? 'teal.500' : 'gray.300'}
+                  color={i < writeRating ? 'teal.500' : 'gray.300'}
                 />
               ))}
-            <Box as="span" ml="2" color="gray.600" fontSize="sm">
-              {property.reviewCount} reviews
-            </Box>
           </Box>
 
           <Button onClick={onOpen}>Write Review</Button>
@@ -159,11 +164,12 @@ const BookingComponent = props => {
                   <FormLabel>Give Rating</FormLabel>
                   {/* <Input ref={initialRef} placeholder="First name" /> */}
                   <Rating
-                    size={48}
-                    icon="star"
+                    size={38}
                     scale={5}
                     fillColor="gold"
                     strokeColor="grey"
+                    defaultValue={writeRating}
+                    getRating={e => setWriteRating(e)}
                   />
                 </FormControl>
 
@@ -171,6 +177,7 @@ const BookingComponent = props => {
                   <FormLabel>Give Review</FormLabel>
                   <Input
                     placeholder="Review"
+                    defaultValue={writeReview}
                     onChange={e => setWriteReview(e.target.value)}
                   />
                 </FormControl>

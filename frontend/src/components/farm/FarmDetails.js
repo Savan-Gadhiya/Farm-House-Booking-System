@@ -13,10 +13,14 @@ const FarmDetails = props => {
     return getFeatures.data.data.data;
   };
 
-  useEffect(async () => {
+  async function getFeatures() {
     setFarmData(props.farm);
     const detail = await getAllFeatures();
     setFeatures(detail);
+  }
+
+  useEffect(() => {
+    getFeatures();
   }, []);
 
   return (

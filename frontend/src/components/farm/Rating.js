@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { Box, Icon, Stack, Text } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { Box, Icon, Stack, Text } from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
 
 const Rating = React.forwardRef(
-  ({ size, icon, scale, fillColor, strokeColor }, ref) => {
-    const [rating, setRating] = useState(0);
+  (
+    { size, scale, fillColor, strokeColor, defaultValue, getRating },
+    ref
+  ) => {
+    const [rating, setRating] = useState(defaultValue);
     const buttons = [];
 
     const onClick = idx => {
@@ -11,21 +15,23 @@ const Rating = React.forwardRef(
         // allow user to click first icon and set rating to zero if rating is already 1
         if (rating === 1 && idx === 1) {
           setRating(0);
+          getRating(0);
         } else {
           setRating(idx);
+          getRating(idx);
         }
       }
     };
 
     const RatingIcon = ({ fill }) => {
       return (
-        <Icon
-          name={icon}
-          size={`${size}px`}
+        <StarIcon
+          w={`${size}px`}
+          h={`${size}px`}
           color={fillColor}
           stroke={strokeColor}
           onClick={onClick}
-          fillOpacity={fill ? "100%" : "0"}
+          fillOpacity={fill ? '100%' : '0'}
         />
       );
     };
@@ -68,6 +74,6 @@ const Rating = React.forwardRef(
   }
 );
 
-Rating.displayName = "Rating";
+Rating.displayName = 'Rating';
 
 export default Rating;

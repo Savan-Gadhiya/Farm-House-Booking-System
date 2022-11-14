@@ -23,8 +23,5 @@ export const get_mybooking = async () => {
   const res = await axios.post(`${API}/booking/getAllBookingByUserId/`, {
     token,
   });
-
-  // const response = await res.json();
-  // console.log('resemail', response);
   return res.data;
 };
