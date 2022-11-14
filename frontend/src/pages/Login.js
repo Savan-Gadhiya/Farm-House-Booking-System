@@ -26,7 +26,6 @@ const Login = () => {
   const { loggedIn, setLoggedIn } = useContext(UserContext);
 
   const inputHandler = e => {
-    // console.log(loginDetail);
     const { name, value } = e.target;
     setLoginDetail(prevVal => {
       return {
@@ -40,7 +39,6 @@ const Login = () => {
     try {
       e.preventDefault();
       const response = await login_api(loginDetail);
-      console.log(response);
       if (response.statusCode === 200) {
         localStorage.setItem('token', response.data.token);
         showToast({

@@ -8,22 +8,18 @@ const Review = props => {
   const [reviews, setReviews] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchReviews = async () => {
+    const data = await fetch_farm_reviews({ farmId });
+    setReviews(data.data);
+  };
+
   useEffect(() => {
-    const fetchReviews = async () => {
-      const data = await fetch_farm_reviews({ farmId });
-
-      console.log('data: ', data.data);
-      setReviews(data.data);
-    };
-
     fetchReviews();
     setIsLoading(false);
   }, []);
 
   return (
     <Box p={'20px 0px'}>
-      {console.log('reviews...', reviews)}
-
       <Heading size={'xl'} as={'h2'} pb={'15px'}>
         Review
       </Heading>
@@ -33,13 +29,9 @@ const Review = props => {
         flexWrap={'wrap'}
         justifyContent={'space-around'}
       >
-        {
-          reviews.map((review, index) => {
-            // console.log(index, review?.User[0]?.firstName)
-            return (
-              <OneReview review={review} key={index} />
-            );
-          })}
+        {reviews.map((review, index) => {
+          return <OneReview review={review} key={index} />;
+        })}
       </Box>
     </Box>
   );

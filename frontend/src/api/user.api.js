@@ -9,7 +9,6 @@ export const fetchEmail = async body => {
   });
 
   // const response = await res.json();
-  // console.log('resemail', response);
   return res.data;
 };
 

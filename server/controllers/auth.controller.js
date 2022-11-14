@@ -33,7 +33,6 @@ exports.register = async (req, res) => {
 
   try {
     const savedUser = await auth.save();
-    // console.log(savedUser);
     // save used details into user profile table
     const user = new userSchema({
       authId: savedUser._id,
@@ -74,7 +73,6 @@ exports.login = async (req, res) => {
 
   // Create and assign token
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-  // console.log(token);
 
   return sendResponse(res, 200, true, "Login Successfull", {
     token: token,

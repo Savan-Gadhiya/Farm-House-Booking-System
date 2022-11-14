@@ -94,8 +94,8 @@ const farmSchema = new mongoose.Schema(
     verificationStatus: {
       type: String,
       enum: ["verified", "pending", "rejected"],
-      default: "pending"
-    }
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

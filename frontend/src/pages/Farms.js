@@ -3,16 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { get_all_farms_api } from '../api/farm.api';
 import FarmCard from '../layouts/shared/FarmCard';
 
-
 const Farms = () => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    async function fetchMyAPI() {
-      let response = await get_all_farms_api();
-      setData(response.data.farms);
-    }
+  const fetchMyAPI = async () => {
+    let response = await get_all_farms_api();
+    setData(response.data.farms);
+  };
 
+  useEffect(() => {
     fetchMyAPI();
   }, []);
 

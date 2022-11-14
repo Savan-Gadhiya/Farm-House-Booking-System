@@ -61,7 +61,6 @@ const FarmBook = props => {
 
   // hide dropdown on ESC press
   const hideOnEscape = e => {
-    // console.log(e.key)
     if (e.key === 'Escape') {
       setOpen(false);
     }
@@ -69,8 +68,6 @@ const FarmBook = props => {
 
   // Hide on outside click
   const hideOnClickOutside = e => {
-    // console.log(refOne.current)
-    // console.log(e.target)
     if (refOne.current && !refOne.current.contains(e.target)) {
       setOpen(false);
     }
@@ -117,7 +114,6 @@ const FarmBook = props => {
       }
     } catch (err) {
       alert('something went wrong from frontend.');
-      console.log(err);
     }
   };
   return (

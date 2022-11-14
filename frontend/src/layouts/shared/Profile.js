@@ -47,7 +47,6 @@ export default function Profile() {
     async function getEmail() {
       const response = await fetchEmail();
       const data = response.data;
-      // console.log('front', response);
       setAddressDetail(prev => {
         return {
           ...prev,
@@ -75,7 +74,6 @@ export default function Profile() {
   // for handling input change
   const inputHandler = e => {
     const { name, value } = e.target;
-    // console.log(userDetail);
     setUserDetail(prev => {
       return {
         ...prev,
@@ -86,7 +84,6 @@ export default function Profile() {
   // for handling change in address field
   const addressHandler = e => {
     const { name, value } = e.target;
-    // console.log(name, value)
     setAddressDetail(prev => {
       return {
         ...prev,
@@ -108,7 +105,6 @@ export default function Profile() {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
       }
     );
-    console.log('file data', fileData);
     return fileData;
   };
 
@@ -117,9 +113,7 @@ export default function Profile() {
     e.preventDefault();
     let profileImage;
     if (profileImg.name != null) {
-      console.log('in...');
       const imageData = await handleImage();
-      console.log('image res ', imageData);
       profileImage = {
         imageUrl: imageData.data.url,
         publicId: imageData.data.public_id,

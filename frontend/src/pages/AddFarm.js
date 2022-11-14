@@ -61,19 +61,16 @@ export default function AddFarm() {
 
   const [featureIdhook, setfeatureIdhook] = useState('');
 
-  useEffect(() => {
-    async function getFeaturesFromApi () {
-      const getFeatures = await axios.get(`${API}/feature/getallfeatures`);
-      console.log('all features', getFeatures.data.data.data);
-      setFeatureDetail(getFeatures.data.data.data);
-    };
-    
-    getFeaturesFromApi();
+  const getFeaturesFromApi = async () => {
+    const getFeatures = await axios.get(`${API}/feature/getallfeatures`);
+    console.log('all features', getFeatures.data.data.data);
+    setFeatureDetail(getFeatures.data.data.data);
+  }
 
-    return () => {
-      console.log('This will be logged on unmount');
-    };
+  useEffect(() => {
+    getFeaturesFromApi();
   }, []);
+
   const [isLoading, setIsLoading] = useState(false); // for displaying spinner on button on submit
 
   const handleInput = e => {
@@ -216,7 +213,6 @@ export default function AddFarm() {
 
   // when marker position is changed on the google map
   const onMarkerChage = e => {
-    
     setCoordinates([e.latLng.lat(), e.latLng.lng()]);
   };
 

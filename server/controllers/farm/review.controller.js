@@ -22,17 +22,22 @@ exports.addReview = async (req, res) => {
     const isBooked = await bookingSchema.findOne({ _id: bookingId });
     if (!isBooked) return sendResponse(res, 400, false, "Farm is not booked.");
 
-    const newreview = new reviewSchema({
-      userId: req.user._id,
-      farmId,
-      bookingId,
-      rating,
-      review,
-    });
+    const saveReview = await reviewSchema.updateOne(
+      { bookingId: bookingId },
+      {
+        $set: {
+          userId: req.user._id,
+          farmId,
+          rating,
+          review,
+        },
+      },
+      {
+        upsert: true,
+      }
+    );
 
-    console.log(farmId, bookingId, rating, review)
-
-    const saveReview = await newreview.save();
+    // const saveReview = await newReview.save();
     sendResponse(res, 200, true, "Your review saved successfully.", {
       saveReview: saveReview,
     });
@@ -64,20 +69,10 @@ exports.getReviewByFarmId = async (req, res) => {
       {
         $match: { farmId: { $eq: mongoose.Types.ObjectId(farmId) } },
       },
-      // {
-      //   $project: {
-      //     fullName: {
-      //       // $concat: ["$User[0].firstName", " ", "$User[0].latName"],
-      //     },
-      //   },
-      // },
     ]);
-
-    // console.log("all---", allReview);
 
     sendResponse(res, 200, true, "All reviews by farmId.", allReview);
   } catch (error) {
-    console.log("Root-->", error);
     sendResponse(res, 500, false, "server error");
   }
 };
@@ -95,6 +90,22 @@ exports.updateReview = async (req, res) => {
     );
     if (!isUpdate) sendResponse(res, 400, false, "Your review is not updated.");
     sendResponse(res, 200, true, "Your review is updated successfully.");
+  } catch (error) {
+    sendResponse(res, 500, false, "server error");
+  }
+};
+
+// @route    GET api/review/getReviewByBookingId/
+// @desc     Get Review By Booking Id
+// @access   Private
+exports.getReviewByBookingId = async (req, res) => {
+  const { bookingId } = req.body;
+  try {
+    const responce = await reviewSchema.findOne({ bookingId: bookingId });
+
+    sendResponse(res, 200, true, "Review fetched successfully.", {
+      data: responce,
+    });
   } catch (error) {
     sendResponse(res, 500, false, "server error");
   }

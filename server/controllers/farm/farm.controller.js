@@ -56,47 +56,46 @@ exports.registerFarm = async (req, res) => {
 // @desc     Get All Farms
 // @access   Public
 exports.getAllFarms = async (req, res) => {
-	try {
-		const farms = await farmSchema.find({});
+  try {
+    const farms = await farmSchema.find({});
 
-		sendResponse(res, 200, true, "All Farms Fetched", { farms: farms });
-	} catch (err) {
-		sendResponse(res, 400, false, "Some error occured", { error: err.message });
-	}
+    sendResponse(res, 200, true, "All Farms Fetched", { farms: farms });
+  } catch (err) {
+    sendResponse(res, 400, false, "Some error occured", { error: err.message });
+  }
 };
 
 // @route    GET api/farm/getFarmById/:farmId
 // @desc     Get Farm by Id
 // @access   Public
 exports.getFarmById = async (req, res) => {
-	const farmId = req.params.farmId;
-	// console.log("farmId: ", farmId);
-	try {
-		const farms = await farmSchema.findById({ _id: farmId });
+  const farmId = req.params.farmId;
+  try {
+    const farms = await farmSchema.findById({ _id: farmId });
 
-		sendResponse(res, 200, false, "All Farms Fetched", farms);
-	} catch (err) {
-		sendResponse(res, 400, true, "Some error occured", { error: err.message });
-	}
+    sendResponse(res, 200, false, "All Farms Fetched", farms);
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
 };
 
 // @route    PUT api/farm/updateFarmById
 // @desc     Update Farm By Id
 // @access   Private
 exports.updateFarmById = async (req, res) => {
-	const farmId = req.params.farmId;
-	try {
-		const farms = await farmSchema.findByIdAndUpdate(
-			{ _id: farmId },
-			req.body,
-			{
-				new: true,
-			}
-		);
-		sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
-	} catch (err) {
-		sendResponse(res, 400, true, "Some error occured", { error: err.message });
-	}
+  const farmId = req.params.farmId;
+  try {
+    const farms = await farmSchema.findByIdAndUpdate(
+      { _id: farmId },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
 };
 
 // ------------------------ Below APIs is only for admin --------------------------------

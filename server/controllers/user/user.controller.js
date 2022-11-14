@@ -89,24 +89,19 @@ exports.getUserController = async (req, res) => {
 
 exports.getUserDetail = async (req, res) => {
   try {
-    console.log("email");
     const userId = req.user._id;
     // const auth = await authSchema.findOne({_id: userId});
-    console.log(userId);
     const user = await userSchema.findOne(
       { authId: userId },
       { wishList: 0, createdAt: 0, updatedAt: 0 }
     );
-    console.log("ser", user);
     if (user == null) {
       return sendResponse(res, 400, false, "User not found!");
     }
     await user.populate("authId", { email: 1, _id: 0 });
-    // console.log("user: ", user);
 
     sendResponse(res, 200, true, "", user);
   } catch (err) {
-    console.log("Error while getting user's email: ", err);
     sendResponse(res, 500, false, "Bad request");
   }
 };
@@ -124,7 +119,6 @@ exports.getOneUser = async (req, res) => {
 
     sendResponse(res, 200, true, "", user);
   } catch (err) {
-    console.log("Error while getting user's email: ", err);
     sendResponse(res, 500, false, "Bad request");
   }
 };

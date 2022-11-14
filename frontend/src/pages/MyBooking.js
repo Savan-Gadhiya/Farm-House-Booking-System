@@ -6,16 +6,14 @@ import BookingComponent from '../components/farm/BookingComponent';
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
-  useEffect(() => {
-    const fetchMyBookings = async () => {
-      const data = await get_mybooking();
-      setBookings(data.data);
-    };
-    fetchMyBookings();
 
-    return () => {
-      console.log('This will be logged on unmount');
-    };
+  const fetchMyBookings = async () => {
+    const data = await get_mybooking();
+    setBookings(data.data);
+  };
+
+  useEffect(() => {
+    fetchMyBookings();
   }, []);
 
   return (
