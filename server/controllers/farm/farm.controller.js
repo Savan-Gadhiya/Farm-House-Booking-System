@@ -26,11 +26,11 @@ exports.registerFarm = async (req, res) => {
     ownerId: req.user._id,
     farmName,
     description,
-    address,
     address: {
       location: {
         coordinates,
       },
+      ...address,
     },
     estimatedCapacity,
     rents: { defaultRent },

@@ -13,7 +13,7 @@ const Farm = props => {
     const res = await get_farm_by_id_api(_id);
     setIsLoading(false);
     setFarmData(res.data);
-  }
+  };
 
   useEffect(() => {
     FetchPerticularFarm();
