@@ -100,4 +100,6 @@ const farmSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+farmSchema.index({ "address.location": "2dsphere" });
+
 module.exports = mongoose.model("Farm", farmSchema);

@@ -8,6 +8,7 @@ const {
   updateFarmById,
   getPendingFarms,
   ChangeVerificationStatus,
+  getNearLocationFarms,
 } = require("../controllers/farm/farm.controller");
 const checkAuth = require("../utils/checkAuth");
 const checkAdminAuth = require("../utils/checkAuthAdmin");
@@ -17,8 +18,12 @@ router.get("/getAllFarms", getAllFarms);
 router.get("/getFarmById/:farmId", getFarmById);
 router.put("/updateFarmById/:farmId", updateFarmById);
 
-router.post("/getPendingFarms", checkAdminAuth,  getPendingFarms);
-router.post("/ChangeVerificationStatus", checkAdminAuth, ChangeVerificationStatus);
-
+router.post("/getPendingFarms", checkAdminAuth, getPendingFarms);
+router.post(
+  "/ChangeVerificationStatus",
+  checkAdminAuth,
+  ChangeVerificationStatus
+);
+router.get("/nearfarms", getNearLocationFarms);
 
 module.exports = router;
