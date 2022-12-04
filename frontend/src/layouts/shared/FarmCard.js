@@ -47,7 +47,7 @@ const FarmCard = props => {
         <Box p="3" flexGrow={1}>
           <Flex justifyContent="space-between" alignContent="center">
             <Box
-              fontSize="xl"
+              fontSize="22px"
               fontWeight="semibold"
               as="h4"
               lineHeight="tight"

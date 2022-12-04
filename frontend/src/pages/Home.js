@@ -32,14 +32,15 @@ const Home = () => {
         <Box className="content">
           <h1 className="light uppercase large-font">Luxurious Farm</h1>
           <p className="light uppercase">About Farm</p>
-          <a href="#this" className="">
+          <Link to="/farms" className="">
             {' '}
-            <button className="btn">Book Your Farm</button>
-          </a>
+            <button className="btn">Visit More Farms</button>
+          </Link>
         </Box>
       </Box>
-      <Box bg="gray.700">
-        <Center h="100px" fontSize={30} color="white">
+
+      <Box>
+        <Center h="100px" fontSize={34}>
           Farms
         </Center>
         <Box
@@ -51,19 +52,20 @@ const Home = () => {
           {data &&
             data.length > 0 &&
             data.map((farm, index) => {
-              if (index < 3) return <FarmCard farmData={farm} key={index} />;
+              if (index < 8) return <FarmCard farmData={farm} key={index} />;
             })}
         </Box>
 
-        <Center h="100px" fontSize={30} color="white">
+        <Center h="100px" fontSize={30}>
           <Link to="/farms">
             <Button>Visit More Farms</Button>
           </Link>
         </Center>
       </Box>
+
       {/* services */}
-      <Box bg="gray.500" pb={18}>
-        <Center h="100px" fontSize={30} color="white">
+      <Box pb={18}>
+        <Center h="100px" fontSize={34}>
           Services
         </Center>
         <Box
@@ -71,70 +73,54 @@ const Home = () => {
           justifyContent={'space-evenly'}
           flexWrap={'wrap'}
           flexDirection={'row'}
-          bg="gray.500"
         >
           <Box
             maxW={'320px'}
             w={'full'}
-            bg={useColorModeValue('white', 'gray.900')}
-            boxShadow={'2xl'}
+            boxShadow="dark-lg"
             rounded={'lg'}
-            p={6}
+            p={5}
             textAlign={'center'}
           >
-            <Heading fontSize={'2xl'} fontFamily={'body'}>
+            <Heading fontSize={'2xl'} fontFamily={'body'} autoCapitalize={true}>
               Add Farms
             </Heading>
 
-            <Text
-              textAlign={'center'}
-              color={useColorModeValue('gray.700', 'gray.400')}
-              px={3}
-            >
-              Your can add farm detail.
+            <Text textAlign={'center'} px={3}>
+              Add Farm & Earn Money
             </Text>
           </Box>
 
           <Box
             maxW={'320px'}
             w={'full'}
-            bg={useColorModeValue('white', 'gray.900')}
-            boxShadow={'2xl'}
+            boxShadow="dark-lg"
             rounded={'lg'}
-            p={6}
+            p={5}
             textAlign={'center'}
           >
             <Heading fontSize={'2xl'} fontFamily={'body'}>
               Book Farm
             </Heading>
 
-            <Text
-              textAlign={'center'}
-              color={useColorModeValue('gray.700', 'gray.400')}
-              px={3}
-            >
-              Your can book farm.
+            <Text textAlign={'center'} px={3}>
+              Book Farm & Enjoy
             </Text>
           </Box>
           <Box
             maxW={'320px'}
             w={'full'}
-            bg={useColorModeValue('white', 'gray.900')}
-            boxShadow={'2xl'}
+            boxShadow="dark-lg"
             rounded={'lg'}
-            p={6}
+            p={5}
             textAlign={'center'}
           >
             <Heading fontSize={'2xl'} fontFamily={'body'}>
               View Farms
             </Heading>
 
-            <Text
-              textAlign={'center'}
-              color={useColorModeValue('gray.700', 'gray.400')}
-              px={3}
-            >
-              You can visit farms.
+            <Text textAlign={'center'} px={3}>
+              View Farm & Book Best Farm
             </Text>
           </Box>
         </Box>
