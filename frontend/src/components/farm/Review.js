@@ -33,12 +33,12 @@ const Review = props => {
 
   return (
     <Box p={'20px 0px'}>
-      <Box>
+      <Box mb={3}>
         <Heading size={'xl'} as={'h2'} pb={'15px'}>
           Review
         </Heading>
         <Box>
-          Average Rating: {average(allRating)} <StarIcon />
+          <Text fontSize={"18px"}>Average Rating: {average(allRating)} <StarIcon /></Text>
         </Box>
       </Box>
       <Box
