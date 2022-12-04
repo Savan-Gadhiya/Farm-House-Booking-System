@@ -33,7 +33,7 @@ const BookingComponent = props => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef(null);
+  const initialRef = React.useRef (null);
   const finalRef = React.useRef(null);
 
   const [writeReview, setWriteReview] = useState('');
@@ -102,10 +102,6 @@ const BookingComponent = props => {
   };
 
   return (
-<<<<<<< HEAD
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" m={4}>
-      <Box p="3" display={'flex'} flexDirection="row">
-=======
     <Box
       w="25em"
       borderWidth="1px"
@@ -115,7 +111,6 @@ const BookingComponent = props => {
       mb={4}
     >
       <Box p="6" display={'flex'} flexDirection="row">
->>>>>>> 3383a24dcb744625e15c0337eb29f375206f288f
         <Box>
           <Image
             boxSize={'160px'}
