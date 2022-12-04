@@ -40,7 +40,7 @@ const FarmCard = props => {
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
           width={'100%'}
-          height={'75%'}
+          height={200}
           objectFit="fill"
         />
 

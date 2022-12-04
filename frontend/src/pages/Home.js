@@ -26,6 +26,7 @@ const Home = () => {
 
     fetchMyAPI();
   }, []);
+
   return (
     <>
       <Box className="header">
@@ -40,7 +41,12 @@ const Home = () => {
       </Box>
 
       <Box>
-        <Center h="100px" fontSize={34}>
+        <Center
+          h="100px"
+          fontSize={40}
+          textTransform={'uppercase'}
+          fontWeight={'600'}
+        >
           Farms
         </Center>
         <Box
@@ -58,14 +64,19 @@ const Home = () => {
 
         <Center h="100px" fontSize={30}>
           <Link to="/farms">
-            <Button>Visit More Farms</Button>
+            <Button colorScheme="telegram">View All Farms</Button>
           </Link>
         </Center>
       </Box>
 
       {/* services */}
-      <Box pb={18}>
-        <Center h="100px" fontSize={34}>
+      <Box pb={25}>
+        <Center
+          h="100px"
+          fontSize={40}
+          textTransform={'uppercase'}
+          fontWeight={'600'}
+        >
           Services
         </Center>
         <Box
@@ -123,6 +134,55 @@ const Home = () => {
               View Farm & Book Best Farm
             </Text>
           </Box>
+        </Box>
+        <Box mt={10} pt={'120px'} pb={'120px'} position={'relative'}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="205"
+            height="141"
+            viewBox="0 0 205 141"
+            fill="#444444"
+            style={{ top: '8%', left: '0%', position: 'absolute' }}
+            >
+            <g>
+              <path d="M69.8 60.7C82.9 69.1 89.4 80.4 89.4 94.7 89.4 108.9 85.2 120.1 76.8 128.3 68.4 136.4 57.9 140.5 45.3 140.5 32.7 140.5 22.1 136.5 13.5 128.6 4.8 120.7 0.5 110.3 0.5 97.5 0.5 84.6 4.7 72.1 13.1 60L54.4 0.5 97.1 0.5 69.8 60.7ZM176.9 60.7C190 69.1 196.5 80.4 196.5 94.7 196.5 108.9 192.3 120.1 183.9 128.3 175.5 136.4 165 140.5 152.4 140.5 139.8 140.5 129.2 136.5 120.6 128.6 111.9 120.7 107.6 110.3 107.6 97.5 107.6 84.6 111.8 72.1 120.2 60L161.5 0.5 204.2 0.5 176.9 60.7Z"></path>
+            </g>
+          </svg>
+          <Box
+            pl={40}
+            pr={40}
+            pt={5}
+            pb={5}
+            justifyContent={'center'}
+            boxShadow="dark-lg"
+            textAlign={'center'}
+          >
+            <Heading pt={'10'}>
+              You are a just one click away from book your favourite farm at a
+              reasonable price near you. Our vision only that to make your
+              holidays memorable and enjoyable.
+            </Heading>
+            <Box fontSize={'4xl'} mt={2}>
+              ~Farm Owner
+            </Box>
+          </Box>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="205"
+            height="141"
+            viewBox="0 0 205 141"
+            fill="#444444"
+            style={{
+              bottom: '10%',
+              right: '0%',
+              position: 'absolute',
+              transform: 'rotate(180deg)',
+            }}
+            >
+            <g>
+              <path d="M69.8 60.7C82.9 69.1 89.4 80.4 89.4 94.7 89.4 108.9 85.2 120.1 76.8 128.3 68.4 136.4 57.9 140.5 45.3 140.5 32.7 140.5 22.1 136.5 13.5 128.6 4.8 120.7 0.5 110.3 0.5 97.5 0.5 84.6 4.7 72.1 13.1 60L54.4 0.5 97.1 0.5 69.8 60.7ZM176.9 60.7C190 69.1 196.5 80.4 196.5 94.7 196.5 108.9 192.3 120.1 183.9 128.3 175.5 136.4 165 140.5 152.4 140.5 139.8 140.5 129.2 136.5 120.6 128.6 111.9 120.7 107.6 110.3 107.6 97.5 107.6 84.6 111.8 72.1 120.2 60L161.5 0.5 204.2 0.5 176.9 60.7Z"></path>
+            </g>
+          </svg>
         </Box>
       </Box>
     </>
