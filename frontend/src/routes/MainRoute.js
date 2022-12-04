@@ -25,6 +25,7 @@ const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userImg, setUserImg] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     checkLogin();
@@ -43,9 +44,10 @@ const MainRoute = () => {
       setUserImg(result.data.data.profileImage.imageUrl);
     } else setLoggedIn(false);
   };
+
   return (
     <UserContext.Provider
-      value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg }}
+      value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg, searchText, setSearchText }}
     >
       <>
         <NavBar />

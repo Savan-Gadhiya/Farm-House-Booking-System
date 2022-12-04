@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, WrapItem, Avatar, Spinner } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
+
 import { get_user_by_userId } from '../../api/user.api';
 
 const OneReview = props => {
   const [review, setReview] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  // const [fullName, setFullName] = useState('');
-  // let fullName = '...';
   const [fullName, setFullName] = useState('');
+  const [avgRating, setAvgRating] = useState(0);
+
   useEffect(() => {
     function wrapperFunc() {
-      // setFullName(
-      //   props?.review?.User[0]?.firstName + ' ' + props?.review?.User[0]?.lastName
-      // );
       setReview(props.review);
+      setAvgRating(props.avgRating);
+
       setIsLoading(false);
 
-      if(props?.review.User){
+      if (props?.review.User) {
         setFullName(
-          props?.review?.User[0]?.firstName + " " + props?.review?.User[0]?.lastName
-        )
+          props?.review?.User[0]?.firstName +
+            ' ' +
+            props?.review?.User[0]?.lastName
+        );
       }
     }
 
@@ -37,8 +39,6 @@ const OneReview = props => {
 
   return (
     <Box w="xl" borderWidth="1px" borderRadius="lg" overflow="hidden" m={'8px'}>
-      {/* {console.table('props: ', props)} */}
-      {/* {console.log('users: ', props.review.User[0].firstName + props.review.User[0].lastName)} */}
       <Box p="4">
         <Box display="flex">
           <WrapItem>

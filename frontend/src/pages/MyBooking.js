@@ -21,9 +21,17 @@ const MyBooking = () => {
       <Heading as="h2" size="xl" p={'25px 0px'}>
         Your Bookings
       </Heading>
-      {bookings.map((booking, index) => {
-        return <BookingComponent key={index} booking={booking} />;
-      })}
+      <Box
+        display={'flex'}
+        flexDirection="row"
+        flexWrap={'wrap'}
+        justifyContent={'space-between'}
+        mt={4}
+      >
+        {bookings.map((booking, index) => {
+          return <BookingComponent key={index} booking={booking} />;
+        })}
+      </Box>
     </Box>
   );
 };

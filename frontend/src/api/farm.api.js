@@ -9,6 +9,15 @@ export const get_all_farms_api = async () => {
   return res.json();
 };
 
+// get search farms
+export const get_search_farms_api = async ({ search }) => {
+  const res = await axios.post(`${API}/farm/searchFarms`, {
+    search,
+  });
+
+  return res.data;
+};
+
 // get one farm by id
 export const get_farm_by_id_api = async farmId => {
   const res = await fetch(`${API}/farm/getFarmById/${farmId}`, {
@@ -29,19 +38,20 @@ export const get_mybooking = async () => {
 
 // Get all farm which verification status  is pending
 export const get_pending_verifiation_farm = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const res = await axios.post(`${API}/farm/getPendingFarms`, {
     token,
   });
   return res.data;
-}
+};
 
 // change farm verification status
 export const acceptFarm = async (farmId, verificationStatus) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const res = await axios.post(`${API}/farm/getPendingFarms`, {
     token,
-    farmId, verificationStatus
+    farmId,
+    verificationStatus,
   });
   return res.data;
 }

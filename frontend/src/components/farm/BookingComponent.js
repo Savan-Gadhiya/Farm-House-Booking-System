@@ -19,6 +19,7 @@ import {
   Input,
   Heading,
   Spinner,
+  HStack,
 } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import { get_farm_by_id_api } from '../../api/farm.api';
@@ -60,7 +61,7 @@ const BookingComponent = props => {
     fetchReview();
 
     setIsLoading(false);
-    console.log("props in booking component : ", props);
+    console.log('props in booking component : ', props);
   }, [props]);
 
 
@@ -101,8 +102,20 @@ const BookingComponent = props => {
   };
 
   return (
+<<<<<<< HEAD
     <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" m={4}>
       <Box p="3" display={'flex'} flexDirection="row">
+=======
+    <Box
+      w="25em"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      mt={4}
+      mb={4}
+    >
+      <Box p="6" display={'flex'} flexDirection="row">
+>>>>>>> 3383a24dcb744625e15c0337eb29f375206f288f
         <Box>
           <Image
             boxSize={'160px'}
@@ -122,26 +135,32 @@ const BookingComponent = props => {
           </Box>
 
           <Box>
-          &#8377;   {props?.booking?.totalPrice}
+            &#8377; {props?.booking?.totalPrice}
             <Box as="span" color="gray.600" fontSize="sm">
               {' '}
               total pay
             </Box>
           </Box>
 
-          <Text mt={2}>Your Rating</Text>
-          <Box display="flex" mt="0" alignItems="center">
-            {Array(5)
-              .fill('')
-              .map((_, i) => (
-                <StarIcon
-                  key={i}
-                  color={i < writeRating ? 'teal.500' : 'gray.300'}
-                />
-              ))}
-          </Box>
+          <HStack mt={2} mb={1}>
+            <Text fontSize={14}>
+              Your Rating
+            </Text>
+            <Box display="flex" alignItems="center">
+              {Array(5)
+                .fill('')
+                .map((_, i) => (
+                  <StarIcon
+                    key={i}
+                    color={i < writeRating ? 'teal.500' : 'gray.300'}
+                  />
+                ))}
+            </Box>
+          </HStack>
 
-          <Button onClick={onOpen} mt={3}>Write Review</Button>
+          <Button onClick={onOpen} mt={3}>
+            Write Review
+          </Button>
 
           {/* model start */}
           <Modal
