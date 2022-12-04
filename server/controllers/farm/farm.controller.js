@@ -149,7 +149,7 @@ exports.getPendingFarms = async (req, res) => {
 
 // @route    GET api/farm/nearfarms
 // @desc     This API will give near farms which by given location
-// @access   Private (Only admin can do this)
+// @access   Private
 exports.getNearLocationFarms = async (req, res) => {
   try {
     console.log("..................");
@@ -175,3 +175,4 @@ exports.getNearLocationFarms = async (req, res) => {
     sendResponse(res, 500, true, "server Error");
   }
 };
+

@@ -63,12 +63,6 @@ const BookingComponent = props => {
     console.log("props in booking component : ", props);
   }, [props]);
 
-  const property = {
-    farmName: 'Modern home in city center in the heart of historic Los Angeles',
-    totalPay: '$1,900.00',
-    reviewCount: 34,
-    rating: 4,
-  };
 
   if (isLoading) {
     return (
@@ -107,8 +101,8 @@ const BookingComponent = props => {
   };
 
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-      <Box p="6" display={'flex'} flexDirection="row">
+    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" m={4}>
+      <Box p="3" display={'flex'} flexDirection="row">
         <Box>
           <Image
             boxSize={'160px'}

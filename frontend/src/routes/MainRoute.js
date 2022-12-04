@@ -16,6 +16,7 @@ import axios from 'axios';
 import { API } from '../api/api_url';
 import { ADMIN_ID } from '../config';
 import VerificationRequests from '../pages/VerificationRequests';
+import BookingReceived from '../pages/BookingReceived';
 import MyBooking from '../pages/MyBooking';
 
 export const UserContext = createContext();
@@ -58,13 +59,10 @@ const MainRoute = () => {
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
-            <Route
-              exact
-              path="/verificationRequests"
-              element={<VerificationRequests />}
-            ></Route>
+            <Route exact path="/verificationRequests" element={<VerificationRequests />}></Route>
             <Route exact path="/mybooking" element={<MyBooking />}></Route>
-          </Routes>
+            <Route exact path="/bookingReceived" element={<BookingReceived />}></Route>
+          </Routes> 
         </Container>
         <Footer />
       </>

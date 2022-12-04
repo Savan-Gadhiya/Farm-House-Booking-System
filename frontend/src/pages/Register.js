@@ -43,22 +43,30 @@ const Register = () => {
           status: 'error',
         });
       } else {
-        const user = await register_api({
+        const response = await register_api({
           email: registerDetail.email,
           password: registerDetail.password,
         });
-
-        if (user.data.statusCode === 200) {
+        console.log("response: ", response);
+        if (response.statusCode === 200) {
           showToast({
             title: 'Your account is created.',
             description: 'Please login.',
             status: 'success',
           });
         }
+        else{
+          showToast({
+            title: 'Error',
+            description: response?.message,
+            status: 'error',
+          });
+        }
       }
     } catch (err) {
+      console.log("Error is: ", err);
       showToast({
-        title: err.response.statusText,
+        title: err.response.status,
         description: err.response.data.message,
         status: 'error',
       });

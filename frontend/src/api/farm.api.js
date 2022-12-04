@@ -45,3 +45,12 @@ export const acceptFarm = async (farmId, verificationStatus) => {
   });
   return res.data;
 }
+
+// change farm verification status
+export const booking_received = async (farmId, verificationStatus) => {
+  const token = localStorage.getItem("token");
+  const res = await axios.post(`${API}/booking/bookingReceived`, {
+    token,
+  });
+  return res.data;
+}

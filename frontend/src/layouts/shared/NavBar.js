@@ -89,6 +89,9 @@ const NavBar = () => {
                         <Link to={'/addfarm'}>
                           <MenuItem>Add Farm</MenuItem>
                         </Link>
+                        <Link to={'/bookingReceived'}>
+                          <MenuItem>Booking Received</MenuItem>
+                        </Link>
                         <Link>
                           <MenuItem>View Rating</MenuItem>
                         </Link>
