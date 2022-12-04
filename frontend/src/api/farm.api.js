@@ -27,6 +27,14 @@ export const get_farm_by_id_api = async farmId => {
   return res.json();
 };
 
+export const get_farm_by_owner_id_api = async () => {
+  const token = localStorage.getItem('token');
+  const res = await axios.post(`${API}/farm/getFarmsByOwnerId`, {
+    token,
+  });
+  return res.data;
+};
+
 // get my booking farms
 export const get_mybooking = async () => {
   const token = localStorage.getItem('token');
@@ -54,13 +62,13 @@ export const acceptFarm = async (farmId, verificationStatus) => {
     verificationStatus,
   });
   return res.data;
-}
+};
 
 // change farm verification status
 export const booking_received = async (farmId, verificationStatus) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const res = await axios.post(`${API}/booking/bookingReceived`, {
     token,
   });
   return res.data;
-}
+};

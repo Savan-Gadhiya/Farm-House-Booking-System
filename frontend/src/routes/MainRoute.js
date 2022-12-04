@@ -18,6 +18,8 @@ import { ADMIN_ID } from '../config';
 import VerificationRequests from '../pages/VerificationRequests';
 import BookingReceived from '../pages/BookingReceived';
 import MyBooking from '../pages/MyBooking';
+import YourFarms from '../pages/YourFarms';
+import UpdateFarm from '../pages/UpdateFarm';
 
 export const UserContext = createContext();
 
@@ -25,7 +27,7 @@ const MainRoute = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userImg, setUserImg] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     checkLogin();
@@ -47,7 +49,15 @@ const MainRoute = () => {
 
   return (
     <UserContext.Provider
-      value={{ loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg, searchText, setSearchText }}
+      value={{
+        loggedIn,
+        setLoggedIn,
+        isAdmin,
+        setIsAdmin,
+        userImg,
+        searchText,
+        setSearchText,
+      }}
     >
       <>
         <NavBar />
@@ -61,10 +71,24 @@ const MainRoute = () => {
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
             <Route exact path="/profile" element={<Profile />}></Route>
-            <Route exact path="/verificationRequests" element={<VerificationRequests />}></Route>
+            <Route
+              exact
+              path="/verificationRequests"
+              element={<VerificationRequests />}
+            ></Route>
             <Route exact path="/mybooking" element={<MyBooking />}></Route>
-            <Route exact path="/bookingReceived" element={<BookingReceived />}></Route>
-          </Routes> 
+            <Route exact path="/yourfarms" element={<YourFarms />}></Route>
+            <Route
+              exact
+              path="/updatefarm/:farmId"
+              element={<UpdateFarm />}
+            ></Route>
+            <Route
+              exact
+              path="/bookingReceived"
+              element={<BookingReceived />}
+            ></Route>
+          </Routes>
         </Container>
         <Footer />
       </>

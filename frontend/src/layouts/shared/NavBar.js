@@ -30,6 +30,7 @@ const NavBar = ({ getSearchResult }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg } =
     useContext(UserContext);
+  console.log('login ', loggedIn, userImg);
 
   const { searchText, setSearchText } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState('');
@@ -41,7 +42,6 @@ const NavBar = ({ getSearchResult }) => {
     localStorage.setItem('token', '');
     setLoggedIn(false);
   };
-
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -90,8 +90,8 @@ const NavBar = ({ getSearchResult }) => {
                         <Link to={'/profile'}>
                           <MenuItem>Profile</MenuItem>
                         </Link>
-                        <Link>
-                          <MenuItem>Help</MenuItem>
+                        <Link to={'yourfarms'}>
+                          <MenuItem>Your Farms</MenuItem>
                         </Link>
                         <MenuDivider />
                         <Link to="/mybooking">

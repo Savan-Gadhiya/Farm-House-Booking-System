@@ -32,10 +32,11 @@ import axios from 'axios';
 import { API } from '../api/api_url';
 import Map from '../components/Map';
 import Toast from '../utils/ShowToast';
+import { useParams } from 'react-router-dom';
 
-export default function AddFarm() {
+export default function UpdateFarm() {
   const [toast, showToast] = Toast();
-
+  const { farmId } = useParams();
   const [farmDetail, setFarmDetail] = useState({
     farmName: '',
     description: '',
@@ -54,22 +55,50 @@ export default function AddFarm() {
   const [files, setFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
   const [farmFile, setFarmFile] = useState('');
-  const [farmDocument, setFarmDocument] = useState({
-    docUrl: '',
-    publicId: '',
-  });
+  const [farmDocument, setFarmDocument] = useState('');
   const [featureDetail, setFeatureDetail] = useState('');
 
   const [featureIdhook, setfeatureIdhook] = useState('');
+
+  const [defaultImages, setDefaultImages] = useState('');
 
   const getFeaturesFromApi = async () => {
     const getFeatures = await axios.get(`${API}/feature/getallfeatures`);
     console.log('all features', getFeatures.data.data.data);
     setFeatureDetail(getFeatures.data.data.data);
   };
+  const getFarmDetail = async () => {
+    const getFarmDetail = await (
+      await axios.get(`${API}/farm/getFarmById/${farmId}`)
+    ).data.data;
+    console.log('farm d....', getFarmDetail);
+    setFarmDetail({
+      farmName: getFarmDetail.farmName,
+      description: getFarmDetail.description,
+      estimatedCapacity: getFarmDetail.estimatedCapacity,
+      defaultRent: getFarmDetail.rents.defaultRent,
+    });
+
+    setAddress({
+      addressLine1: getFarmDetail.address.addressLine1,
+      addressLine2: getFarmDetail.address.addressLine2,
+      city: getFarmDetail.address.city,
+      state: getFarmDetail.address.state,
+      pincode: getFarmDetail.address.pincode,
+    });
+
+    setFarmDocument(getFarmDetail.farmDocument);
+    console.log('farm doc is ', farmDocument);
+
+    setfeatureIdhook(getFarmDetail.featuresId);
+
+    setDefaultImages(getFarmDetail.images);
+    console.log('image...', getFarmDetail.images);
+  };
 
   useEffect(() => {
     getFeaturesFromApi();
+    getFarmDetail();
   }, []);
 
   const [isLoading, setIsLoading] = useState(false); // for displaying spinner on button on submit
@@ -164,24 +193,55 @@ export default function AddFarm() {
     setIsLoading(true); // displaying spinner in button
     e.preventDefault();
     console.log('fdlfdj...', featureIdhook);
-    await handleDrop();
-    const idproof = await getFarmDocUrl();
-    const token = localStorage.getItem('token');
 
+    await handleDrop();
     let result;
     try {
-      result = await axios.post(`${API}/farm/registerFarm`, {
-        ...farmDetail,
-        address,
-        coordinates,
-        token,
-        images: arr,
-        farmDocument: {
-          docUrl: idproof.url,
-          publicId: idproof.public_id,
-        },
-        featuresId: featureIdhook,
-      });
+      if (arr.length > 0) {
+        await axios.put(`${API}/farm/addimages`, {
+          images: [...arr],
+          farmId: farmId,
+        });
+      }
+      let idproof;
+      if (farmFile.length > 3) {
+        console.log('in........');
+        idproof = await getFarmDocUrl();
+      }
+
+      const token = localStorage.getItem('token');
+      if (idproof != null) {
+        result = await axios.post(`${API}/farm/updateFarm`, {
+          farmId,
+          ...farmDetail,
+          address,
+          coordinates,
+          token,
+          featuresId: featureIdhook,
+          defaultRent: farmDetail.defaultRent,
+          farmDocument: {
+            docUrl: idproof.url,
+            publicId: idproof.public_id,
+          },
+        });
+      } else {
+        result = await axios.post(`${API}/farm/updateFarm`, {
+          farmId,
+          ...farmDetail,
+          address,
+          coordinates,
+          // address: {
+          //   ...address,
+          //   location: {
+          //     coordinates,
+          //   },
+          // },
+          token,
+          featuresId: featureIdhook,
+          defaultRent: farmDetail.defaultRent,
+        });
+      }
+
       setIsLoading(false);
 
       console.log('result: ', result);
@@ -238,6 +298,21 @@ export default function AddFarm() {
     console.log(featureIdhook);
   };
 
+  const deleteDefaultImage = async e => {
+    const deleteImg = axios.put(`${API}/farm/deleteImage`, {
+      farmId: farmId,
+      publicId: e.target.name,
+    });
+    if (deleteImg.data.statusCode == 200) {
+      const newFiles = defaultImages.filter(
+        (val, ind) => e.target.name != val.publicId
+      );
+      setDefaultImages(newFiles);
+    } else {
+      alert('Image is not deleted due to some issue.');
+    }
+  };
+
   return (
     <>
       {/* for location model */}
@@ -291,7 +366,7 @@ export default function AddFarm() {
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'} textAlign={'center'}>
-              Add Farm Detail
+              Update Farm Detail
             </Heading>
           </Stack>
           <Box
@@ -374,6 +449,7 @@ export default function AddFarm() {
                             onChange={handleFeature}
                             name={feature._id}
                             key={ind}
+                            isChecked={featureIdhook.includes(feature._id)}
                           >
                             {feature?.featureName}
                           </Checkbox>
@@ -405,6 +481,23 @@ export default function AddFarm() {
                 />
               </FormControl>
               <FormControl>
+                {defaultImages
+                  ? defaultImages.map((file, ind) => {
+                      return (
+                        <Button
+                          onClick={deleteDefaultImage}
+                          name={file.publicId}
+                          ml={'3px'}
+                          key={ind}
+                          mt={2}
+                        >
+                          img {ind + 1}
+                        </Button>
+                      );
+                    })
+                  : ''}
+              </FormControl>
+              <FormControl>
                 {files.map((file, ind) => {
                   return (
                     <Button
@@ -420,7 +513,9 @@ export default function AddFarm() {
               </FormControl>
 
               <FormControl id="files" isRequired mb={'7px'}>
-                <FormLabel>Farm Document</FormLabel>
+                <FormLabel>
+                  Farm Document(Do you want to change Document?)
+                </FormLabel>
                 <Input
                   type="file"
                   name="files"

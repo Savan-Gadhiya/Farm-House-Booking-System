@@ -64,7 +64,6 @@ const BookingComponent = props => {
     console.log('props in booking component : ', props);
   }, [props]);
 
-
   if (isLoading) {
     return (
       <Box>
@@ -138,9 +137,7 @@ const BookingComponent = props => {
           </Box>
 
           <HStack mt={2} mb={1}>
-            <Text fontSize={14}>
-              Your Rating
-            </Text>
+            <Text fontSize={14}>Your Rating</Text>
             <Box display="flex" alignItems="center">
               {Array(5)
                 .fill('')
