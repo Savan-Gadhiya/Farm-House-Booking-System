@@ -51,7 +51,6 @@ const Home = () => {
           {data &&
             data.length > 0 &&
             data.map((farm, index) => {
-              console.log('farm...', farm);
               if (index < 3) return <FarmCard farmData={farm} key={index} />;
             })}
         </Box>

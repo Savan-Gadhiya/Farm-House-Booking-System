@@ -16,19 +16,25 @@ import {
   InputLeftElement,
   InputRightElement,
   Icon,
+  CircularProgress,
   Input,
   Text,
 } from '@chakra-ui/react';
 import { MoonIcon, Search2Icon, SunIcon } from '@chakra-ui/icons';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '../../routes/MainRoute';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+import { UserContext } from '../../routes/MainRoute';
+
+const NavBar = ({ getSearchResult }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { loggedIn, setLoggedIn, isAdmin, setIsAdmin, userImg } =
     useContext(UserContext);
   console.log('login ', loggedIn, userImg);
+
+  const { searchText, setSearchText } = useContext(UserContext);
+  const [searchValue, setSearchValue] = useState('');
+  const [isOnChange, setIsOnChange] = useState(false);
 
   useEffect(() => {}, [loggedIn]);
 
@@ -47,7 +53,15 @@ const NavBar = () => {
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
               <InputGroup>
-                <Input placeholder="Search Here..." />
+                <Input
+                  placeholder="Search Here..."
+                  onChange={e => {
+                    setIsOnChange(true);
+                    // getSearchResult(e.target.value);
+                    setSearchValue(e.target.value);
+                    setSearchText(e.target.value);
+                  }}
+                />
                 <InputRightElement
                   children={<Search2Icon color="green.500" />}
                 />
@@ -88,6 +102,9 @@ const NavBar = () => {
                         </Link>
                         <Link to={'/addfarm'}>
                           <MenuItem>Add Farm</MenuItem>
+                        </Link>
+                        <Link to={'/bookingReceived'}>
+                          <MenuItem>Booking Received</MenuItem>
                         </Link>
                         <Link>
                           <MenuItem>View Rating</MenuItem>

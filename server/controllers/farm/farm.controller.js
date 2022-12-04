@@ -267,7 +267,7 @@ exports.getPendingFarms = async (req, res) => {
 
 // @route    GET api/farm/nearfarms
 // @desc     This API will give near farms which by given location
-// @access   Private (Only admin can do this)
+// @access   Private
 exports.getNearLocationFarms = async (req, res) => {
   try {
     console.log("..................");
@@ -291,5 +291,25 @@ exports.getNearLocationFarms = async (req, res) => {
       err
     );
     sendResponse(res, 500, true, "server Error");
+  }
+};
+
+exports.searchFarms = async (req, res) => {
+  try {
+    const searchText = String(req.body.search).trim();
+
+    let farms;
+    if (searchText.length == 0) {
+      farms = await farmSchema.find({});
+    } else {
+      farms = await farmSchema.find({
+        $text: { $search: searchText },
+      });
+    }
+
+    sendResponse(res, 200, true, farms.length + " record found.", farms);
+  } catch (err) {
+    console.log("Error in Searching.", err);
+    sendResponse(res, 500, true, "server error.");
   }
 };

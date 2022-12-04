@@ -13,6 +13,7 @@ const {
   deleteImage,
   updateFarm,
   addImages,
+  searchFarms,
 } = require("../controllers/farm/farm.controller");
 const checkAuth = require("../utils/checkAuth");
 const checkAdminAuth = require("../utils/checkAuthAdmin");
@@ -33,5 +34,6 @@ router.post(
   ChangeVerificationStatus
 );
 router.get("/nearfarms", getNearLocationFarms);
+router.post("/searchFarms", searchFarms);
 
 module.exports = router;

@@ -1,13 +1,15 @@
 import {
   Flex,
-  Circle,
+  Text,
   Box,
   Image,
+  HStack,
   useColorModeValue,
   Badge,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import CardCarousel from './CardCarousel';
 
 const FarmCard = props => {
@@ -30,12 +32,11 @@ const FarmCard = props => {
         }}
       >
         <Image
-          // src={props.farmData.image}
           src={
             props.farmData.images[0].imageUrl
               ? props.farmData.images[0].imageUrl
               : require('../../images/farm_image.jpeg')
-          } //require('../../images/farm_image.jpeg')
+          }
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
           width={'100%'}
@@ -68,7 +69,6 @@ const FarmCard = props => {
               )}
             </Box>
           </Flex>
-
           <Flex justifyContent="space-between" alignContent="center">
             <Box
               fontSize="sm"
@@ -81,6 +81,12 @@ const FarmCard = props => {
                 props.farmData.address.state}
             </Box>
           </Flex>
+          <Box display={'flex'} flexDirection={'row'} mt={1}>
+            &#8377;{props.farmData.rents.defaultRent}{' '}
+            <Text mt={0.5} ml={2} fontSize={'13px'}>
+              per day
+            </Text>
+          </Box>
         </Box>
       </Box>
     </Flex>
