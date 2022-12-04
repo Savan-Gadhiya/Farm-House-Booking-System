@@ -17,6 +17,8 @@ import { API } from '../api/api_url';
 import { ADMIN_ID } from '../config';
 import VerificationRequests from '../pages/VerificationRequests';
 import MyBooking from '../pages/MyBooking';
+import YourFarms from '../pages/YourFarms';
+import UpdateFarm from '../pages/UpdateFarm';
 
 export const UserContext = createContext();
 
@@ -64,6 +66,12 @@ const MainRoute = () => {
               element={<VerificationRequests />}
             ></Route>
             <Route exact path="/mybooking" element={<MyBooking />}></Route>
+            <Route exact path="/yourfarms" element={<YourFarms />}></Route>
+            <Route
+              exact
+              path="/updatefarm/:farmId"
+              element={<UpdateFarm />}
+            ></Route>
           </Routes>
         </Container>
         <Footer />

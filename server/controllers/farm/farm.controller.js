@@ -52,6 +52,57 @@ exports.registerFarm = async (req, res) => {
   }
 };
 
+exports.updateFarm = async (req, res) => {
+  // Validation of farm data
+
+  const {
+    farmId,
+    farmName,
+    description,
+    address,
+    estimatedCapacity,
+    coordinates,
+    featuresId,
+    defaultRent,
+    // images,
+  } = req.body;
+
+  const farmupdatedetail = {
+    farmName,
+    description,
+    address: {
+      ...address,
+      location: {
+        type: "Point",
+        coordinates,
+      },
+    },
+    estimatedCapacity,
+    rents: { defaultRent },
+    // images: { ...images },
+    featuresId: [...featuresId],
+  };
+
+  // console.log("feature ids", farmupdatedetail);
+  // console.log("body ", req.body);
+
+  try {
+    const find = await farmSchema.findOne({ _id: farmId });
+    console.log("find", find);
+    const savedFarm = await farmSchema.findByIdAndUpdate(
+      { _id: farmId },
+      farmupdatedetail,
+      { new: true }
+    );
+
+    sendResponse(res, 200, false, "Farm detail added successfully.", {
+      data: savedFarm,
+    });
+  } catch (err) {
+    sendResponse(res, 500, true, "Server crashed...", { error: err.message });
+  }
+};
+
 // @route    GET api/farm/getAllFarms
 // @desc     Get All Farms
 // @access   Public
@@ -79,6 +130,21 @@ exports.getFarmById = async (req, res) => {
   }
 };
 
+// @route    GET api/farm/getFarmsByOwnerId/:ownerId
+// @desc     Get Farm by owner Id
+// @access   Public
+exports.getFarmByOwnerId = async (req, res) => {
+  // const ownerId = req.params.ownerId;
+  const ownerId = req.user._id;
+  try {
+    const farms = await farmSchema.find({ ownerId });
+    console.log("farms ", farms);
+    sendResponse(res, 200, false, "All Farms Fetched", farms);
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
+};
+
 // @route    PUT api/farm/updateFarmById
 // @desc     Update Farm By Id
 // @access   Private
@@ -93,6 +159,58 @@ exports.updateFarmById = async (req, res) => {
       }
     );
     sendResponse(res, 200, false, "All Farms Fetched", { farms: farms });
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
+};
+
+// @route    PUT api/farm/deleteImage
+// @desc     Delete image
+// @access   Private
+exports.deleteImage = async (req, res) => {
+  const farmId = req.body.farmId;
+  const publicId = req.body.publicId;
+  try {
+    const farms = await farmSchema.findByIdAndUpdate(
+      { _id: farmId },
+      {
+        $pull: {
+          images: {
+            publicId: publicId,
+          },
+        },
+      }
+    );
+    sendResponse(res, 200, false, "Farm Deleted Successfully", {
+      farms: farms,
+    });
+  } catch (err) {
+    sendResponse(res, 400, true, "Some error occured", { error: err.message });
+  }
+};
+
+// @route    PUT api/farm/deleteImage
+// @desc     Delete image
+// @access   Private
+exports.addImages = async (req, res) => {
+  const farmId = req.body.farmId;
+  var images = req.body.images;
+  console.log("images. .......", req.body);
+  try {
+    // const arrr = [...images];
+    // console.log("arr...", arrr);
+    // console.log("images........", ...images);
+    const farms = await farmSchema.updateMany(
+      { _id: farmId },
+      {
+        $push: {
+          images: images,
+        },
+      }
+    );
+    sendResponse(res, 200, false, "Farm image added Successfully", {
+      farms: farms,
+    });
   } catch (err) {
     sendResponse(res, 400, true, "Some error occured", { error: err.message });
   }

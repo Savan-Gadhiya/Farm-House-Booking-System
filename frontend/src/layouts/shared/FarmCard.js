@@ -24,7 +24,9 @@ const FarmCard = props => {
         position="relative"
         cursor={'pointer'}
         onClick={() => {
-          navigate('/farms/' + props.farmData._id);
+          props.forOwner
+            ? navigate('/updatefarm/' + props.farmData._id)
+            : navigate('/farms/' + props.farmData._id);
         }}
       >
         <Image
