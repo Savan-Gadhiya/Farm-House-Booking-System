@@ -83,7 +83,8 @@ exports.updateFarm = async (req, res) => {
     featuresId: [...featuresId],
   };
 
-  // console.log("feature ids", farmupdatedetail);
+  console.log("Farm Update Detaills: ", farmupdatedetail);
+  console.log("co-ordinates: ", farmupdatedetail.address.location.coordinates);
   // console.log("body ", req.body);
 
   try {
