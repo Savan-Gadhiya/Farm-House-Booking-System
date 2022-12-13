@@ -16,26 +16,25 @@ import {
   useColorModeValue,
   WrapItem,
 } from '@chakra-ui/react';
-import axios from 'axios';
-import { API } from '../../api/api_url';
-const VerifySingleFarm = props => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+const VerifySingleFarm = props => {
   // change verification status to accept:
-  const changeVerificationStatus = async e => {
-    // e.preventDefault();
-    const token = localStorage.getItem('token');
-    const farmId = props.farm._id;
-    const verificationStatus = e.target.name;
-    console.log(verificationStatus);
-    const res = await axios.post(`${API}/farm/ChangeVerificationStatus`, {
-      token,
-      farmId,
-      verificationStatus,
-    });
-    /// TOAST HERE TO DISPLAY MESSAGE
-    // console.log(res.data);
-    // return res.data;
-  };
+  // const changeVerificationStatus = async e => {
+  //   // e.preventDefault();
+  //   const token = localStorage.getItem('token');
+  //   const farmId = props.farm._id;
+  //   const verificationStatus = e.target.name;
+  //   console.log(verificationStatus);
+  //   const res = await axios.post(`${API}/farm/ChangeVerificationStatus`, {
+  //     token,
+  //     farmId,
+  //     verificationStatus,
+  //   });
+  //   /// TOAST HERE TO DISPLAY MESSAGE
+  //   // console.log(res.data);
+  //   // return res.data;
+  // };
 
   return (
     <Box py={6} m={3}>
@@ -46,7 +45,7 @@ const VerifySingleFarm = props => {
         bg={useColorModeValue('white', 'gray.900')}
         boxShadow={'2xl'}
         padding={3}
-        width={'90%'}
+        width={{base: '70%', sm: '90%'}}
         mx={'auto'}
         height={'15rem'}
       >
@@ -80,9 +79,14 @@ const VerifySingleFarm = props => {
           {/* desc */}
           <Text
             color={useColorModeValue('gray.600', 'gray.400')}
-            noOfLines={4} // display maximum 3 lines
+            noOfLines={3} // display maximum 3 lines
           >
             {props?.farm?.description}
+          </Text>
+
+          <Text color={useColorModeValue('gray.600', 'gray.400')}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width={'10px'} preserveAspectRatio={true} fill={'#aaa'} style={{display: 'inline', margin: '0px 5px'}}><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7  64-64 64z"/></svg>
+              {`${props?.farm?.address?.city}, ${props?.farm?.address?.state}`} 
           </Text>
         </Stack>
         <Stack
@@ -102,7 +106,7 @@ const VerifySingleFarm = props => {
             width={'150px'}
             background={'#68D391'}
             color={'black'}
-            onClick={changeVerificationStatus}
+            onClick={(e) => props.changeVerificationStatus(props.farm._id, e.target.name)}
             name={"accept"}
           >
             Accept
@@ -112,58 +116,11 @@ const VerifySingleFarm = props => {
             background={'#FC8181'}
             color={'black'}
             width={'150px'}
-            onClick={changeVerificationStatus}
+            onClick={(e) => props.changeVerificationStatus(props.farm._id, e.target.name)}
             name={"reject"}
           >
             Reject
           </Button>
-
-          {/* <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            bg={'blue.400'}
-            color={'white'}
-            boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}
-          >
-            Follow
-          </Button>
-          <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            _focus={{
-              bg: 'gray.200',
-            }}
-          >
-            Message
-          </Button>
-          <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            bg={'blue.400'}
-            color={'white'}
-            boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}
-          >
-            Follow
-          </Button> */}
         </Stack>
       </Stack>
     </Box>

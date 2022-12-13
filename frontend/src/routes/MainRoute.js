@@ -64,30 +64,48 @@ const MainRoute = () => {
         <Container maxW="95%">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/login" element={<Login />}></Route>
-            <Route exact path="/register" element={<Register />}></Route>
+            {!loggedIn && (
+              <Route exact path="/login" element={<Login />}></Route>
+            )}
+            {!loggedIn && (
+              <Route exact path="/register" element={<Register />}></Route>
+            )}
             <Route exact path="/farmcard" element={<FarmCard />}></Route>
-            <Route exact path="/addfarm" element={<AddFarm />}></Route>
+            {loggedIn && (
+              <Route exact path="/addfarm" element={<AddFarm />}></Route>
+            )}
             <Route exact path="/farms" element={<Farms />}></Route>
             <Route exact path="/farms/:farmId" element={<Farm />}></Route>
-            <Route exact path="/profile" element={<Profile />}></Route>
-            <Route
-              exact
-              path="/verificationRequests"
-              element={<VerificationRequests />}
-            ></Route>
-            <Route exact path="/mybooking" element={<MyBooking />}></Route>
-            <Route exact path="/yourfarms" element={<YourFarms />}></Route>
-            <Route
-              exact
-              path="/updatefarm/:farmId"
-              element={<UpdateFarm />}
-            ></Route>
-            <Route
-              exact
-              path="/bookingReceived"
-              element={<BookingReceived />}
-            ></Route>
+            {loggedIn && (
+              <Route exact path="/profile" element={<Profile />}></Route>
+            )}
+            {loggedIn && isAdmin && (
+              <Route
+                exact
+                path="/verificationRequests"
+                element={<VerificationRequests />}
+              ></Route>
+            )}
+            {loggedIn && (
+              <Route exact path="/mybooking" element={<MyBooking />}></Route>
+            )}
+            {loggedIn && (
+              <Route exact path="/yourfarms" element={<YourFarms />}></Route>
+            )}
+            {loggedIn && (
+              <Route
+                exact
+                path="/updatefarm/:farmId"
+                element={<UpdateFarm />}
+              ></Route>
+            )}
+            {loggedIn && (
+              <Route
+                exact
+                path="/bookingReceived"
+                element={<BookingReceived />}
+              ></Route>
+            )}
           </Routes>
         </Container>
         <Footer />

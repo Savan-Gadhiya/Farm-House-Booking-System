@@ -51,7 +51,7 @@ export default function UpdateFarm() {
     state: '',
     pincode: '',
   });
-  const [coordinates, setCoordinates] = useState([0, 0]); // this is take location of farm from marker
+  const [coordinates, setCoordinates] = useState(['', '']); // this is take location of farm from marker
   const [files, setFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
   const [farmFile, setFarmFile] = useState('');
@@ -71,7 +71,7 @@ export default function UpdateFarm() {
     const getFarmDetail = await (
       await axios.get(`${API}/farm/getFarmById/${farmId}`)
     ).data.data;
-    console.log('farm d....', getFarmDetail);
+    // console.log('farm d....', getFarmDetail);
     setFarmDetail({
       farmName: getFarmDetail.farmName,
       description: getFarmDetail.description,
@@ -87,8 +87,11 @@ export default function UpdateFarm() {
       pincode: getFarmDetail.address.pincode,
     });
 
+    setCoordinates(getFarmDetail?.address?.location?.coordinates);
+
+    
     setFarmDocument(getFarmDetail.farmDocument);
-    console.log('farm doc is ', farmDocument);
+    // console.log('farm doc is ', farmDocument);
 
     setfeatureIdhook(getFarmDetail.featuresId);
 
@@ -192,6 +195,7 @@ export default function UpdateFarm() {
   const handleOnSubmit = async e => {
     setIsLoading(true); // displaying spinner in button
     e.preventDefault();
+    // console.log("on submit: ", coordinates);
     console.log('fdlfdj...', featureIdhook);
 
     await handleDrop();
@@ -244,7 +248,7 @@ export default function UpdateFarm() {
 
       setIsLoading(false);
 
-      console.log('result: ', result);
+      // console.log('result: ', result);
 
       if (result.data.statusCode === 200) {
         showToast({
@@ -274,6 +278,7 @@ export default function UpdateFarm() {
 
   // when marker position is changed on the google map
   const onMarkerChage = e => {
+    // console.log("location is: ", [e.latLng.lat(), e.latLng.lng()])
     setCoordinates([e.latLng.lat(), e.latLng.lng()]);
   };
 
