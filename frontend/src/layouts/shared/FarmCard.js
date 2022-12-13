@@ -40,14 +40,14 @@ const FarmCard = props => {
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
           width={'100%'}
-          height={'75%'}
+          height={200}
           objectFit="fill"
         />
 
         <Box p="3" flexGrow={1}>
           <Flex justifyContent="space-between" alignContent="center">
             <Box
-              fontSize="xl"
+              fontSize="22px"
               fontWeight="semibold"
               as="h4"
               lineHeight="tight"
