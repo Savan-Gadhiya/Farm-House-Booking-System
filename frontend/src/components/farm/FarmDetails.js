@@ -29,11 +29,15 @@ const FarmDetails = props => {
       <Heading as="h2" size="xl" noOfLines={1} mt={'2px'}>
         {farmData.farmName}
       </Heading>
-      <Text size="lg" mt={'2px'}>
+      <Text size="lg" textAlign={'justify'} mt={'2px'}>
         {farmData.description}
       </Text>
       <Box mt={'10px'}></Box>
-      <Box></Box>
+      <Box>
+        <Text as="b" fontSize="2xl">
+          Farm Capacity: {farmData.estimatedCapacity}
+        </Text>
+      </Box>
       <Box mt={4}>
         <Text as="b" fontSize="3xl">
           Features

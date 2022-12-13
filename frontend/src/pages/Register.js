@@ -12,6 +12,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { register_api } from '../api/auth.api';
 import Toast from '../utils/ShowToast';
 
@@ -23,6 +24,7 @@ const Register = () => {
     isAdded: 'false',
   });
   const [toast, showToast] = Toast();
+  const navigate = useNavigate();
 
   const inputHandler = e => {
     const { name, value } = e.target;
@@ -47,15 +49,15 @@ const Register = () => {
           email: registerDetail.email,
           password: registerDetail.password,
         });
-        console.log("response: ", response);
+        console.log('response: ', response);
         if (response.statusCode === 200) {
           showToast({
             title: 'Your account is created.',
             description: 'Please login.',
             status: 'success',
           });
-        }
-        else{
+          navigate('/login');
+        } else {
           showToast({
             title: 'Error',
             description: response?.message,
@@ -64,7 +66,7 @@ const Register = () => {
         }
       }
     } catch (err) {
-      console.log("Error is: ", err);
+      console.log('Error is: ', err);
       showToast({
         title: err.response.status,
         description: err.response.data.message,

@@ -41,6 +41,7 @@ export default function Profile() {
     publicId: '',
   });
   const [profileImg, setProfileImg] = useState({});
+  const [isUpdate, setisUpdate] = useState(false);
 
   // get email address of logged in user and display it into email field
   useEffect(() => {
@@ -69,7 +70,7 @@ export default function Profile() {
       });
     }
     getEmail();
-  }, []);
+  }, [isUpdate]);
 
   // for handling input change
   const inputHandler = e => {
@@ -119,6 +120,7 @@ export default function Profile() {
         publicId: imageData.data.public_id,
       };
     }
+    console.log('image...', profileImage);
     const compeleteUserDetail = {
       ...userDetail,
       address: addressDetail,
@@ -132,6 +134,8 @@ export default function Profile() {
         description: 'Your data is updated.',
         status: 'success',
       });
+      if (isUpdate) setisUpdate(false);
+      else setisUpdate(true);
     } else {
       showToast({
         title: 'Something went wrong.',

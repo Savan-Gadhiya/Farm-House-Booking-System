@@ -22,6 +22,7 @@ import 'react-date-range/dist/theme/default.css';
 import axios from 'axios';
 import { API } from '../../api/api_url';
 import { UserContext } from '../../routes/MainRoute';
+import Toast from '../../utils/ShowToast';
 
 const FarmBook = props => {
   const { loggedIn } = useContext(UserContext);
@@ -41,6 +42,7 @@ const FarmBook = props => {
 
   // open close
   const [open, setOpen] = useState(false);
+  const [toast, showToast] = Toast();
 
   // get the target element to toggle
   const refOne = useRef(null);
@@ -100,6 +102,14 @@ const FarmBook = props => {
   const handleOnSubmit = async () => {
     try {
       if (!loggedIn) return alert('Your should log in to book farm.');
+      if (otherBookingDetail.noOfPeople > farmData.estimatedCapacity) {
+        showToast({
+          title: 'Enter valid capacity of farm',
+          description: 'Please check the capacity of farm.',
+          status: 'error',
+        });
+        return;
+      }
       const token = localStorage.getItem('token');
       const result = await axios.post(`${API}/booking/bookFarm`, {
         farmId: farmData._id,
@@ -110,10 +120,18 @@ const FarmBook = props => {
         token: token,
       });
       if (result.data.statusCode === 200) {
-        alert('Farm is booked.');
+        showToast({
+          title: 'Farm Booking',
+          description: 'Farm is booked.',
+          status: 'success',
+        });
       }
     } catch (err) {
-      alert('something went wrong from frontend.');
+      showToast({
+        title: 'Error',
+        description: 'Please enter valid detail.',
+        status: 'success',
+      });
     }
   };
   return (
@@ -126,8 +144,11 @@ const FarmBook = props => {
         </Stack>
         <Box {...props?.style}>
           <Text fontSize={'30px'}>
-            &#8377; {farmData?.rents?.defaultRent} 
-            <Text fontSize={'18px'} display={'inline-block'} pl={3}> per day </Text>
+            &#8377; {farmData?.rents?.defaultRent}
+            <Text fontSize={'18px'} display={'inline-block'} pl={3}>
+              {' '}
+              per day{' '}
+            </Text>
           </Text>
           <HStack mt={'20px'}>
             <FormControl id="checkInDate" isRequired>
@@ -175,7 +196,9 @@ const FarmBook = props => {
               onChange={handleInput}
             />
           </FormControl>
-          <Text fontSize={'18px'} mt={3}>Total Rent: &#8377; {calculateTotalRent()} </Text>
+          <Text fontSize={'18px'} mt={3}>
+            Total Rent: &#8377; {calculateTotalRent()}{' '}
+          </Text>
           <Stack spacing={10} pt={2} mt={'20px'}>
             <Button
               loadingText="Submitting"

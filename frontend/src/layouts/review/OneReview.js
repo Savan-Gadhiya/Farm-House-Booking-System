@@ -44,7 +44,7 @@ const OneReview = props => {
           <WrapItem>
             <Avatar
               name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
+              src={props.image ? props.image : 'https://bit.ly/dan-abramov'}
               boxSize={'45px'}
             />
           </WrapItem>

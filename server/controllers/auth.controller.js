@@ -15,7 +15,7 @@ exports.register = async (req, res) => {
   // Validation of user
   const { error } = registerValidation(req.body);
   if (error)
-    return sendResponse(res, 400, false, "Email already exists.", {
+    return sendResponse(res, 400, false, "Email enter valid email.", {
       error: error.details[0].message,
     });
 
@@ -90,6 +90,21 @@ exports.logout = async (req, res) => {
       { profileImage: 1 }
     );
     sendResponse(res, 200, true, "You are already loggedIn.", userData);
+  } catch (err) {
+    return sendResponse(res, 400, false, "Something went wrong.", {
+      error: err,
+    });
+  }
+};
+
+// @route    POST api/getuser
+// @desc     get auth detail
+// @access   Private
+exports.getAuth = async (req, res) => {
+  try {
+    console.log("in........");
+    const userData = await userSchema.findOne({ authId: req.user._id });
+    sendResponse(res, 200, true, "user detail found", userData);
   } catch (err) {
     return sendResponse(res, 400, false, "Something went wrong.", {
       error: err,

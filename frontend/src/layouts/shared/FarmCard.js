@@ -19,7 +19,7 @@ const FarmCard = props => {
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         width="18em"
-        minHeight="18em"
+        Height="18em"
         borderWidth="1px"
         rounded="lg"
         shadow="lg"
@@ -40,7 +40,7 @@ const FarmCard = props => {
           alt={`Picture of ${props.farmData.farmName}`}
           roundedTop="lg"
           width={'100%'}
-          height={'75%'}
+          height={200}
           objectFit="fill"
         />
 

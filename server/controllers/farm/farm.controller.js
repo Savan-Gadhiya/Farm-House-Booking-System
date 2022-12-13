@@ -87,8 +87,13 @@ exports.updateFarm = async (req, res) => {
   // console.log("body ", req.body);
 
   try {
-    const find = await farmSchema.findOne({ _id: farmId });
-    console.log("find", find);
+    // const find = await farmSchema.findOneAndUpdate({ _id: farmId },{
+    //   $set:{
+    //     "lo"
+    //   }
+    // });
+    // console.log("find", find);
+    // await find.save();
     const savedFarm = await farmSchema.findByIdAndUpdate(
       { _id: farmId },
       farmupdatedetail,
@@ -99,6 +104,7 @@ exports.updateFarm = async (req, res) => {
       data: savedFarm,
     });
   } catch (err) {
+    console.log("error,,,", err);
     sendResponse(res, 500, true, "Server crashed...", { error: err.message });
   }
 };

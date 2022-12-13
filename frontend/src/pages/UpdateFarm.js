@@ -51,7 +51,7 @@ export default function UpdateFarm() {
     state: '',
     pincode: '',
   });
-  const [coordinates, setCoordinates] = useState([0, 0]); // this is take location of farm from marker
+  const [coordinates, setCoordinates] = useState(['', '']); // this is take location of farm from marker
   const [files, setFiles] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure(); // for displaying model
   const [farmFile, setFarmFile] = useState('');
@@ -144,7 +144,7 @@ export default function UpdateFarm() {
     navigator.geolocation.getCurrentPosition(position => {
       console.log('geo location ', position);
       // coordinates = [position.coords.longitude, position.coords.latitude];
-      setCoordinates([position.coords.longitude, position.coords.latitude]);
+      setCoordinates([position.coords.latitude, position.coords.longitude]);
     });
     console.log('location ', coordinates);
   };

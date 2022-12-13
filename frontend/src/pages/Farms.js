@@ -10,7 +10,7 @@ const Farms = props => {
 
   const fetchMyAPI = async () => {
     // let response = await get_all_farms_api();
-    let response = await get_search_farms_api({search: searchText});
+    let response = await get_search_farms_api({ search: searchText });
     setData(response.data);
   };
 
