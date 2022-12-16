@@ -11,6 +11,14 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from '@chakra-ui/react';
 import { DateRange } from 'react-date-range';
 
@@ -23,6 +31,7 @@ import axios from 'axios';
 import { API } from '../../api/api_url';
 import { UserContext } from '../../routes/MainRoute';
 import Toast from '../../utils/ShowToast';
+import { Link } from 'react-router-dom';
 
 const FarmBook = props => {
   const { loggedIn } = useContext(UserContext);
@@ -43,6 +52,7 @@ const FarmBook = props => {
   // open close
   const [open, setOpen] = useState(false);
   const [toast, showToast] = Toast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // get the target element to toggle
   const refOne = useRef(null);
@@ -208,10 +218,80 @@ const FarmBook = props => {
               _hover={{
                 bg: 'blue.500',
               }}
-              onClick={handleOnSubmit}
+              onClick={onOpen}
             >
               Submit
             </Button>
+            {/* <Button onClick={onOpen}>Open Modal</Button> */}
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Enter Payment Detail</ModalHeader>
+                <ModalCloseButton />
+                {/* <ModalBody><Lorem count={2} />hello world</ModalBody> */}
+                {/* <Stack
+                  spacing={8}
+                  mx={'auto'}
+                  w={'lg'}
+                  maxW={'lg'}
+                  // py={12}
+                  // px={6}
+                > */}
+                <Box
+                  // rounded={'lg'}
+                  // bg={useColorModeValue('white', 'gray.700')}
+                  // boxShadow={'lg'}
+                  p={5}
+                >
+                  <Stack spacing={4}>
+                    <FormControl id="email" isRequired>
+                      <Input
+                        type="number"
+                        name="email"
+                        placeholder="Card Number"
+                        onChange={handleInput}
+                      />
+                    </FormControl>
+                    <HStack spacing="24px">
+                      <Input
+                        type="number"
+                        name="cvv"
+                        placeholder="Card CVV"
+                        onChange={handleInput}
+                      />
+                      <Input
+                        type="date"
+                        name="date"
+                        placeholder="Expiry Date"
+                        onChange={handleInput}
+                      />
+                    </HStack>
+                    <FormControl id="name">
+                      <Input
+                        type="text"
+                        name="holderName"
+                        placeholder="Card Holder Name"
+                        onChange={handleInput}
+                      />
+                    </FormControl>
+                  </Stack>
+                </Box>
+                {/* </Stack> */}
+                <ModalFooter>
+                  <Button colorScheme="red" mr={3} onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button
+                    // variant="ghost"
+                    colorScheme={'green'}
+                    onClick={handleOnSubmit}
+                  >
+                    Place Your Order
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </Stack>
         </Box>
       </Stack>

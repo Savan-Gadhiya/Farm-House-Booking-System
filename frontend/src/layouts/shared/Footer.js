@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
-
 const SocialButton = ({ children, label, href }) => {
   return (
     <chakra.button
@@ -51,9 +50,8 @@ const Footer = () => {
           align={'center'}
         >
           <Stack direction={'row'} spacing={6}>
-            <Link href={'#'}>Home</Link>
+            <Link href={'/'}>Home</Link>
             <Link href={'#'}>About</Link>
-            <Link href={'#'}>Blog</Link>
             <Link href={'#'}>Contact</Link>
           </Stack>
         </Container>
@@ -72,7 +70,7 @@ const Footer = () => {
             justify={{ base: 'center', md: 'space-between' }}
             align={{ base: 'center', md: 'center' }}
           >
-            <Text>© 2022 Chakra Templates. All rights reserved</Text>
+            <Text>© 2022 Farm House Booking. All rights reserved</Text>
             <Stack direction={'row'} spacing={6}>
               <SocialButton label={'Twitter'} href={'#'}>
                 <FaTwitter />

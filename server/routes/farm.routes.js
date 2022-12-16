@@ -33,7 +33,7 @@ router.post(
   checkAdminAuth,
   ChangeVerificationStatus
 );
-router.get("/nearfarms", getNearLocationFarms);
+router.get("/nearfarms/:longitude/:latitude", getNearLocationFarms);
 router.post("/searchFarms", searchFarms);
 
 module.exports = router;

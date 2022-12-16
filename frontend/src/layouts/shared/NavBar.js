@@ -106,9 +106,6 @@ const NavBar = ({ getSearchResult }) => {
                         <Link to={'/bookingReceived'}>
                           <MenuItem>Booking Received</MenuItem>
                         </Link>
-                        <Link>
-                          <MenuItem>View Rating</MenuItem>
-                        </Link>
                         <MenuDivider />
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </MenuList>
@@ -162,7 +159,7 @@ const NavBar = ({ getSearchResult }) => {
                         bg: 'pink.300',
                       }}
                     >
-                      Sign In
+                      Login
                     </Button>
                   </Link>
 
@@ -178,7 +175,7 @@ const NavBar = ({ getSearchResult }) => {
                         bg: 'pink.300',
                       }}
                     >
-                      Sign Up
+                      Register
                     </Button>
                   </Link>
                 </Stack>

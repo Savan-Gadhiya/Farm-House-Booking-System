@@ -277,20 +277,23 @@ exports.getPendingFarms = async (req, res) => {
 // @access   Private
 exports.getNearLocationFarms = async (req, res) => {
   try {
+    const latitude = req.params.latitude;
+    const longitude = req.params.longitude;
+    console.log(latitude, " ", longitude);
     console.log("..................");
     const result = await farmSchema.find({
       "address.location": {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [21.092134, 73.19989],
+            coordinates: [longitude, latitude],
           },
-          $maxDistance: 10000, // in meters
+          $maxDistance: 70000, // in meters
           $minDistance: 0,
         },
       },
     });
-    console.log("result is .... ", res);
+    // console.log("result is .... ", res);
     sendResponse(res, 200, true, "found", result);
   } catch (err) {
     console.log(

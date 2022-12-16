@@ -20,6 +20,7 @@ import BookingReceived from '../pages/BookingReceived';
 import MyBooking from '../pages/MyBooking';
 import YourFarms from '../pages/YourFarms';
 import UpdateFarm from '../pages/UpdateFarm';
+import NearFarms from '../pages/NearFarms';
 
 export const UserContext = createContext();
 
@@ -61,9 +62,15 @@ const MainRoute = () => {
     >
       <>
         <NavBar />
-        <Container maxW="95%">
+        <Container maxW="95%" minH={'75vh'}>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
+            <Route
+              exact
+              path="/nearfarms/:latitude/:longitude"
+              element={<NearFarms />}
+            ></Route>
+
             {!loggedIn && (
               <Route exact path="/login" element={<Login />}></Route>
             )}
