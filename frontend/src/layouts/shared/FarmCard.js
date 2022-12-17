@@ -57,7 +57,7 @@ const FarmCard = props => {
             </Box>
 
             <Box>
-              {props.farmData.verificationStatus === 'verified' && (
+              {props.farmData.verificationStatus === 'accept' && (
                 <Badge
                   rounded="full"
                   px="2"

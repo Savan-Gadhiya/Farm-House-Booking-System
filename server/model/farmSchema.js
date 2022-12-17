@@ -93,7 +93,7 @@ const farmSchema = new mongoose.Schema(
     },
     verificationStatus: {
       type: String,
-      enum: ["verified", "pending", "rejected"],
+      enum: ["accept", "pending", "rejected"],
       default: "pending",
     },
   },
