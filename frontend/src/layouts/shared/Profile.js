@@ -112,20 +112,26 @@ export default function Profile() {
   // send data to backend when form is submitted
   const onSubmit = async e => {
     e.preventDefault();
-    let profileImage;
+
+    let profileImage, compeleteUserDetail;
     if (profileImg.name != null) {
       const imageData = await handleImage();
       profileImage = {
         imageUrl: imageData.data.url,
         publicId: imageData.data.public_id,
       };
+      console.log('image...', profileImage);
+      compeleteUserDetail = {
+        ...userDetail,
+        address: addressDetail,
+        profileImage,
+      };
+    } else {
+      compeleteUserDetail = {
+        ...userDetail,
+        address: addressDetail,
+      };
     }
-    console.log('image...', profileImage);
-    const compeleteUserDetail = {
-      ...userDetail,
-      address: addressDetail,
-      profileImage,
-    };
 
     const data = await saveUserData(compeleteUserDetail);
     if (data.statusCode == 200) {
