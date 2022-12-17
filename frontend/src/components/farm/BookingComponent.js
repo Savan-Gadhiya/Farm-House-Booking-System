@@ -21,11 +21,13 @@ import {
   Spinner,
   HStack,
 } from '@chakra-ui/react';
-import { StarIcon } from '@chakra-ui/icons';
 import { get_farm_by_id_api } from '../../api/farm.api';
 import Rating from './Rating';
 import { add_review, fetch_review_by_bookingId } from '../../api/review.api';
 import Toast from '../../utils/ShowToast';
+
+import { StarIcon } from '@chakra-ui/icons';
+import moment from 'moment';
 
 const BookingComponent = props => {
   const [farm, setFarm] = useState({});
@@ -33,13 +35,15 @@ const BookingComponent = props => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef (null);
+  const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
   const [writeReview, setWriteReview] = useState('');
   const [writeRating, setWriteRating] = useState(0);
 
   const [toast, showToast] = Toast();
+
+  console.log(props);
 
   const farmId = props.booking.farmId;
 
@@ -135,9 +139,16 @@ const BookingComponent = props => {
               total pay
             </Box>
           </Box>
+          <HStack>
+            <Text fontSize={16}>Duration: </Text>
+            <Box fontSize={14}>
+              {moment.utc(props?.booking?.checkInDate).format('MM/DD/YYYY')} To{' '}
+              {moment.utc(props?.booking?.checkOutDate).format('MM/DD/YYYY')}
+            </Box>
+          </HStack>
 
           <HStack mt={2} mb={1}>
-            <Text fontSize={14}>Your Rating</Text>
+            <Text fontSize={16}>Your Rating: </Text>
             <Box display="flex" alignItems="center">
               {Array(5)
                 .fill('')
