@@ -33,7 +33,7 @@ const VerificationRequests = () => {
   }
   return (
     <Box w="100%" minH={'67vh'} m={3} p={3}>
-      {console.log(farms)}
+      {/* {console.log(farms)} */}
       <Heading as="h1" size={'xl'}>
         Pending Verification Requests
       </Heading>
