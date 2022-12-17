@@ -288,7 +288,7 @@ exports.getNearLocationFarms = async (req, res) => {
             type: "Point",
             coordinates: [longitude, latitude],
           },
-          $maxDistance: 70000, // in meters
+          $maxDistance: 20000, // in meters
           $minDistance: 0,
         },
       },

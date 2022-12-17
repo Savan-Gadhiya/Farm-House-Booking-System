@@ -9,7 +9,7 @@ const checkAuth = async (req, res, next) => {
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     // console.log(verified)
-    // { _id: '61dc4afe92898efe987e2e53', iat: 1641830535 } => verified will return
+    // { _id: '61dc4afe92898efe987e2e53', iat: 1641830535 } => verified will return (Here is of record present in AuthID collection)
     const result = await authSchema.findOne({ _id: verified._id });
     if (!result) {
       return res.status(400).json({

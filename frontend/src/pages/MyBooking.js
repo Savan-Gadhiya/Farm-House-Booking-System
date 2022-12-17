@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Image, Badge, Heading } from '@chakra-ui/react';
+import { Box, Flex, Image, Badge, Heading, Text } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
 import { get_mybooking } from '../api/farm.api';
 import BookingComponent from '../components/farm/BookingComponent';
@@ -28,9 +28,16 @@ const MyBooking = () => {
         justifyContent={'space-between'}
         mt={4}
       >
-        {bookings.map((booking, index) => {
-          return <BookingComponent key={index} booking={booking} />;
-        })}
+        {bookings.length ? (
+          bookings.map((booking, index) => {
+            return <BookingComponent key={index} booking={booking} />;
+          })
+        ) : (
+          <Text as="p" size="md" my={3}>
+            {' '}
+            Booking history is not found!
+          </Text>
+        )}
       </Box>
     </Box>
   );
