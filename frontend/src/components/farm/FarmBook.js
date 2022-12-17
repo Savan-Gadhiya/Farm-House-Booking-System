@@ -48,6 +48,11 @@ const FarmBook = props => {
     totalPrice: 0,
     noOfPeople: 0,
   });
+  const [pymentDetail, setPaymentDetail] = useState({
+    cardNumber: '',
+    cvv: '',
+    holderName: '',
+  });
 
   // open close
   const [open, setOpen] = useState(false);
@@ -97,6 +102,18 @@ const FarmBook = props => {
     });
   };
 
+  const paymentInputHandler = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setPaymentDetail(preVal => {
+      return {
+        ...preVal,
+        [name]: value,
+      };
+    });
+  };
+
   const calculateTotalRent = () => {
     var d1 = new Date(range[0].startDate);
     var d2 = new Date(range[0].endDate);
@@ -111,6 +128,21 @@ const FarmBook = props => {
 
   const handleOnSubmit = async () => {
     try {
+      if (pymentDetail.cardNumber.length != 16)
+        return showToast({
+          title: 'Invalid Card Number',
+          description: 'Please Enter Valid Card Number.',
+          status: 'error',
+        });
+
+      if (pymentDetail.cvv.length != 3) {
+        return showToast({
+          title: 'Invalid CVV Number',
+          description: 'Please Enter Valid CVV Number.',
+          status: 'error',
+        });
+      }
+
       if (!loggedIn) return alert('Your should log in to book farm.');
       if (otherBookingDetail.noOfPeople > farmData.estimatedCapacity) {
         showToast({
@@ -248,9 +280,10 @@ const FarmBook = props => {
                     <FormControl id="email" isRequired>
                       <Input
                         type="number"
-                        name="email"
+                        name="cardNumber"
                         placeholder="Card Number"
-                        onChange={handleInput}
+                        value={pymentDetail.cardNumber}
+                        onChange={paymentInputHandler}
                       />
                     </FormControl>
                     <HStack spacing="24px">
@@ -258,13 +291,14 @@ const FarmBook = props => {
                         type="number"
                         name="cvv"
                         placeholder="Card CVV"
-                        onChange={handleInput}
+                        value={pymentDetail.cvv}
+                        onChange={paymentInputHandler}
                       />
                       <Input
                         type="date"
                         name="date"
                         placeholder="Expiry Date"
-                        onChange={handleInput}
+                        // onChange={handleInput}
                       />
                     </HStack>
                     <FormControl id="name">
@@ -272,7 +306,8 @@ const FarmBook = props => {
                         type="text"
                         name="holderName"
                         placeholder="Card Holder Name"
-                        onChange={handleInput}
+                        value={pymentDetail.holderName}
+                        onChange={paymentInputHandler}
                       />
                     </FormControl>
                   </Stack>
