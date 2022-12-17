@@ -32,9 +32,9 @@ const FarmDetails = props => {
       <Text size="lg" textAlign={'justify'} mt={'2px'}>
         {farmData.description}
       </Text>
-      <Box mt={'10px'}></Box>
+      <Box mt={'30px'}></Box>
       <Box>
-        <Text as="b" fontSize="2xl">
+        <Text as="b" fontSize="3xl">
           Farm Capacity: {farmData.estimatedCapacity}
         </Text>
       </Box>
@@ -55,6 +55,18 @@ const FarmDetails = props => {
               }
             })
           : ''}
+      </Box>
+
+      <Box>
+        <Text fontSize="3xl" mt="20px">
+          <b> Farm Address:</b>{' '}
+        </Text>
+        <Text fontSize={'md'} mb={'30px'}>
+          {' '}
+          {farmData.address?.addressLine1} {farmData.address?.addressLine2}{' '}
+          {farmData.address?.city} {farmData.address?.state},{' '}
+          {farmData.address?.pincode}.
+        </Text>
       </Box>
     </Box>
   );
